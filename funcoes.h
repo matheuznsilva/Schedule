@@ -1,10 +1,8 @@
 
-int inserir_evento(Lista *TA, Lista *RE, Lista* AN);
+int inserir_evento(Lista *LI);
 
-int visualizar_evento(Lista *TA, Lista *RE, Lista *AN);
+int visualizar_evento(Lista *LI);
 
-int remover_evento(Lista *TA, Lista *RE, Lista *AN);
-
-void imprime_Evento(int i, struct agenda ag);
+int remover_evento(Lista *LI);
 
 int coordenadas();

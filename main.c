@@ -10,14 +10,9 @@ int main() {
 	
 	int a=0;
 	
-	Lista *TA;		// Declaração do ponteiro do tipo Lista
-	Lista *RE;		// Declaração do ponteiro do tipo Lista
-	Lista *AN;		// Declaração do ponteiro do tipo Lista
+	Lista *LI;		// Declaração do ponteiro do tipo Lista
 	
-	TA = cria_lista();		// Criação da lista
-	RE = cria_lista();		// Criação da lista
-	AN = cria_lista();		// Criação da lista
-
+	LI = cria_lista();		// Criação da lista
 
 	printf("\n\t\t\tBEM VINDO\n\n");
     sleep(1);
@@ -27,8 +22,8 @@ int main() {
         printf("\n============= MENU =============");
         printf("\n| 1 - INSERIR UM EVENTO        |"
     	       "\n| 2 - VISUALIZAR UM EVENTO     |"
-    	       "\n| 3 - IMPRIMIR TODOS EVENTOS   |"
-    	       "\n| 4 - REMOVER UM EVENTO        |"
+    	       "\n| 3 - REMOVER UM EVENTO        |"
+               "\n|                              |"
     	       "\n|                              |"
     	       "\n| 0 - SAIR                     |");
         printf("\n================================\n\n");
@@ -38,18 +33,18 @@ int main() {
 
         switch(a){
             case 1:{ 
-                inserir_evento(TA, RE, AN);
+                inserir_evento(LI);
                 break;
             }
             case 2:{
-                visualizar_evento(TA, RE, AN);
+                imprime_Evento(LI);
+                printf("\nDIGITE ENTER PARA VOLTAR ");
+                setbuf(stdin,NULL);
+                coordenadas();
                 break;
             }
             case 3:{
- 
-            }
-            case 4:{
-                remover_evento(TA, RE, AN);
+                remover_evento(LI);
                 break;
             }
             default:{
@@ -58,9 +53,7 @@ int main() {
         } 
     }while(a!=0);
 
-    libera_lista(TA);
-    libera_lista(RE);
-    libera_lista(AN);
+    libera_lista(LI);
 	
 	return 0;
 }

@@ -6,7 +6,7 @@
 
 int coordenadas();
 
-int inserir_evento(Lista *TA, Lista *RE, Lista* AN){
+int inserir_evento(Lista *LI){
 
 	struct agenda AUX;	// "Variável" do tipo struct aluno
 	
@@ -40,8 +40,9 @@ int inserir_evento(Lista *TA, Lista *RE, Lista* AN){
                 scanf("%d", &AUX.esforco);
                 printf("\nPRIORIDADE: ");
                 scanf("%d", &AUX.priority);
+                AUX.evento = 1;
 
-                insere_lista_ordenada(TA, AUX);
+                insere_lista_ordenada(LI, AUX);
                 break;
             }
 
@@ -58,9 +59,10 @@ int inserir_evento(Lista *TA, Lista *RE, Lista* AN){
         		setbuf(stdin, NULL);
                 fgets(AUX.local, N, stdin);
                 printf("\nPRESENCA OBRIGATORIA(1-sim/0-nao): ");
-                scanf("%d", &AUX.priority);
+                scanf("%d", &AUX.presenca);
+                AUX.evento = 2;
 
-                insere_lista_ordenada(RE, AUX);
+                insere_lista_ordenada(LI, AUX);
                 break;
             }
             
@@ -79,8 +81,9 @@ int inserir_evento(Lista *TA, Lista *RE, Lista* AN){
                 printf("\nNOME ANIVERSARIANTE: ");
         		setbuf(stdin, NULL);
                 fgets(AUX.name, N, stdin);
+                AUX.evento = 3;
                 
-                insere_lista_ordenada(AN, AUX);
+                insere_lista_ordenada(LI, AUX);
                 break;
             }
             default:{
@@ -90,10 +93,10 @@ int inserir_evento(Lista *TA, Lista *RE, Lista* AN){
     }while(a!=0);
 }
 
-int visualizar_evento(Lista *TA, Lista *RE, Lista *AN){
+int visualizar_evento(Lista *LI){
     struct agenda AUX;  // "Variável" do tipo struct aluno
     
-    int a=0, num=0;
+    int a=0, B, num=0;
 
     do{
         system("clear");
@@ -113,8 +116,8 @@ int visualizar_evento(Lista *TA, Lista *RE, Lista *AN){
             case 1:{
                 printf("HORARIO: ");
                 scanf("%d", &num);
-                busca_lista(TA, num, &AUX);
-                imprime_Evento(1, AUX);
+                busca_lista(LI, num, &AUX);
+                //imprime_Evento(1, AUX);
                 printf("\n\n DIGITE ENTER PARA VOLTAR ");
                 setbuf(stdin,NULL);
                 coordenadas();
@@ -124,8 +127,8 @@ int visualizar_evento(Lista *TA, Lista *RE, Lista *AN){
             case 2:{ 
                 printf("HORARIO: ");
                 scanf("%d", &num);
-                busca_lista(RE, num, &AUX);
-                imprime_Evento(2, AUX);
+                busca_lista(LI, num, &AUX);
+                //imprime_Evento(2, AUX);
                 printf("\n\n DIGITE ENTER PARA VOLTAR ");
                 setbuf(stdin,NULL);
                 coordenadas();
@@ -136,8 +139,8 @@ int visualizar_evento(Lista *TA, Lista *RE, Lista *AN){
             case 3:{ 
                 printf("HORARIO: ");
                 scanf("%d", &num);
-                busca_lista(AN, num, &AUX);
-                imprime_Evento(3, AUX);
+                busca_lista(LI, num, &AUX);
+                //imprime_Evento(3, AUX);
                 printf("\n\n DIGITE ENTER PARA VOLTAR ");
                 setbuf(stdin,NULL);
                 coordenadas();
@@ -151,7 +154,7 @@ int visualizar_evento(Lista *TA, Lista *RE, Lista *AN){
     }while(a!=0);   
 }
 
-int remover_evento(Lista *TA, Lista *RE, Lista *AN){
+int remover_evento(Lista *LI){
     int a=0, num=0;
 
     do{
@@ -172,7 +175,7 @@ int remover_evento(Lista *TA, Lista *RE, Lista *AN){
             case 1:{
                 printf("HORARIO: ");
                 scanf("%d", &num);
-                remove_lista(TA, num);                
+                remove_lista(LI, num);                
                 printf("\n\n DIGITE ENTER PARA VOLTAR ");
                 setbuf(stdin,NULL);
                 coordenadas();
@@ -182,7 +185,7 @@ int remover_evento(Lista *TA, Lista *RE, Lista *AN){
             case 2:{ 
                 printf("HORARIO: ");
                 scanf("%d", &num);
-                remove_lista(RE, num);                
+                remove_lista(LI, num);                
                 printf("\n\n DIGITE ENTER PARA VOLTAR ");
                 setbuf(stdin,NULL);
                 coordenadas();
@@ -193,7 +196,7 @@ int remover_evento(Lista *TA, Lista *RE, Lista *AN){
             case 3:{ 
                 printf("HORARIO: ");
                 scanf("%d", &num);
-                remove_lista(AN, num);                
+                remove_lista(LI, num);                
                 printf("\n\n DIGITE ENTER PARA VOLTAR ");
                 setbuf(stdin,NULL);
                 coordenadas();
@@ -207,7 +210,7 @@ int remover_evento(Lista *TA, Lista *RE, Lista *AN){
     }while(a!=0);   
 }
 
-void imprime_Evento(int i, struct agenda ag){
+/*void imprime_Evento(int i, struct agenda ag){
     if(i==1){
         printf("\nASSUNTO: %s", ag.subject);
         printf("HORARIO DE INICIO: %d", ag.time_start);
@@ -236,7 +239,7 @@ void imprime_Evento(int i, struct agenda ag){
     } else{
         printf("ERRO!!!");
     }
-}
+} */
 
 
 int coordenadas(){

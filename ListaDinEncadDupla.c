@@ -133,3 +133,40 @@ int remove_lista(Lista *li, int num){
     printf("\n\nEVENTO REMOVIDO COM SUCESSO");
 	return 1;
 }
+
+void imprime_Evento(Lista *LI){
+    Elem *no = *LI;
+
+    while(no!=NULL){        // Laço de repetição para percorrer a lista
+        if(no->dados.evento == 1){
+            printf("\nASSUNTO: %s", no->dados.subject);
+            printf("HORARIO DE INICIO: %d", no->dados.time_start);
+            printf("\nHORARIO DE TERMINO: %d", no->dados.time_end);
+            printf("\nESFORCO: %d", no->dados.esforco);
+            printf("\nPRIORIDADE: %d", no->dados.priority);
+
+        } else if(no->dados.evento==2){
+            printf("\nASSUNTO: %s", no->dados.subject);
+            printf("HORARIO DE INICIO: %d", no->dados.time_start);
+            printf("\nHORARIO DE TERMINO: %d", no->dados.time_end);
+            printf("\nLOCAL: %s", no->dados.local);
+            if(no->dados.presenca == 1){
+                printf("PRESENCA OBRIGATORIA");
+            } else{
+                printf("NAO EH OBRIGATORIA A PRESENCA");
+            }
+
+        } else if(no->dados.evento==3){
+            printf("\nASSUNTO: %s", no->dados.subject);
+            printf("HORARIO DE INICIO: %d", no->dados.time_start);
+            printf("\nHORARIO DE TERMINO: %d", no->dados.time_end);
+            printf("\nLOCAL: %s", no->dados.local);
+            printf("ANIVERSARIANTE: %s", no->dados.name);
+
+        } else{
+            printf("ERRO!!!");
+        }
+    	printf("\n");
+        no = no->prox;      // Ponteiro auxiliar recebendo a posição do proximo nó 
+    }
+}

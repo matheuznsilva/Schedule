@@ -9,6 +9,7 @@ struct agenda{
 	int esforco;
 	int priority;
 	int presenca;
+	int evento;
 };
 
 typedef struct elemento* Lista;
@@ -27,3 +28,5 @@ int insere_lista_ordenada(Lista* li, struct agenda ag);
 int remove_lista(Lista* li, int num);
 
 void imprime_Lista(Lista *li);
+
+void imprime_Evento(Lista *LI);
