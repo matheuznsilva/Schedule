@@ -1,8 +1,11 @@
 
-int inserir_evento(Lista *LI);
 
-int visualizar_evento(Lista *LI);
+Login* loading();
 
-int remover_evento(Lista *LI);
+int coordenates();
 
-int coordenadas();
+int menuLogin();
+
+int menu();
+
+

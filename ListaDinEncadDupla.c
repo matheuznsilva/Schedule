@@ -1,29 +1,30 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "ListaDinEncadDupla.h"
+#include "login.h"
 #include "funcoes.h"
-#include "quickSort.h"
 
 struct elemento{		// Struct que define cada elemento da lista
-	struct elemento *ant;		// Ponteiro que recebe a posição do nó anterior
-	struct agenda dados;		// Struct dados do tipo aluno
-	struct elemento *prox;		// Ponteiro que recebe a posição do nó posterior
+	struct elemento *ant;		// Ponteiro que recebe a posiï¿½ï¿½o do nï¿½ anterior
+	struct agenda DATA;		// Struct dados do tipo aluno
+	struct elemento *prox;		// Ponteiro que recebe a posiï¿½ï¿½o do nï¿½ posterior
 };
-typedef struct elemento Elem;		// Definição do tipo elemento
+typedef struct elemento Elem;		// Definiï¿½ï¿½o do tipo elemento
 
-Lista* cria_lista(){		// Função de criação da lista
-	Lista* li = (Lista*) malloc(sizeof(Lista));		// Alocação de memoria para o inicio da lista 
-	if(li != NULL){		// Verificação se a lista foi criada
+Lista* cria_lista(){		// Funï¿½ï¿½o de criaï¿½ï¿½o da lista
+	Lista* li = (Lista*) malloc(sizeof(Lista));		// Alocaï¿½ï¿½o de memoria para o inicio da lista 
+	if(li != NULL){		// Verificaï¿½ï¿½o se a lista foi criada
 		*li = NULL;		// Caso tenha sido criada aponta para null
 	}
 	return li;		// retorna lista
 }
 
-void libera_lista(Lista *li){		// Função que Apaga a lista
+void libera_lista(Lista *li){		// Funï¿½ï¿½o que Apaga a lista
 	if(li != NULL){		// Confere se a lista existe
-		Elem* no;		// Declaração de um ponteiro auxiliar
-		while((*li) != NULL){		// Laço de repetição para percorrer a lista
-			no = *li;		// Ponteiro auxiliar recebe a posição atual da lista
+		Elem* no;		// Declaraï¿½ï¿½o de um ponteiro auxiliar
+		while((*li) != NULL){		// Laï¿½o de repetiï¿½ï¿½o para percorrer a lista
+			no = *li;		// Ponteiro auxiliar recebe a posiï¿½ï¿½o atual da lista
 			*li = (*li)->prox;		// Ponteiro principal passa a apontar para o proximo elemento
 			free(no);		// Libera o ponteiro auxiliar
 		}
@@ -31,34 +32,34 @@ void libera_lista(Lista *li){		// Função que Apaga a lista
 	}
 }
 
-int insere_lista_ordenada(Lista* li, struct agenda ag){		// Função de inserção ao final da lista 
+int insere_lista_ordenada(Lista* li, struct agenda ag){		// Funï¿½ï¿½o de inserï¿½ï¿½o ao final da lista 
 	if(li == NULL){		// Confere se a lista existe 
-		return 0;		// Caso não exista retorna 0
+		return 0;		// Caso nï¿½o exista retorna 0
 		printf("\n\t\t\tNAO INSERIDO\n\n");
     	sleep(1);
 	}
-	Elem* no;		// Declaração de um ponteiro auxiliar
-	no = (Elem*) malloc(sizeof(Elem));		// Alocação de memoria para o novo nó da lista
-	if(no == NULL){		// Confere se o nó foi criado 
+	Elem* no;		// Declaraï¿½ï¿½o de um ponteiro auxiliar
+	no = (Elem*) malloc(sizeof(Elem));		// Alocaï¿½ï¿½o de memoria para o novo nï¿½ da lista
+	if(no == NULL){		// Confere se o nï¿½ foi criado 
 		printf("\n\t\t\tNAO INSERIDO\n\n");
     	sleep(1);
-		return 0;		// Caso não tenha criado retorna 0
+		return 0;		// Caso nï¿½o tenha criado retorna 0
 	}
 	
-	no->dados = ag;		// Preenchimento da lista com o dado fornecido 
+	no->DATA = ag;		// Preenchimento da lista com o dado fornecido 
 	
-	if((*li) == NULL){		// Confere se é a primeira posição da lista
-		no->prox = NULL;		// Ponteiro prox é apontado para null
+	if((*li) == NULL){		// Confere se ï¿½ a primeira posiï¿½ï¿½o da lista
+		no->prox = NULL;		// Ponteiro prox ï¿½ apontado para null
 		no->ant = NULL;		// Se for o ponteiro ant vai receber null
-		*li = no;		// e li recebe o nó atual
+		*li = no;		// e li recebe o nï¿½ atual
 		printf("\n\t\t\tINSERIDO\n\n");
     	sleep(1);
 		return 1;
-	} else{		// Caso não seja a primeira posição do vetor executa as instuções abaixo
-		Elem *ante, *atual = *li;		// Criação de um segundo ponteiro auxiliar para percorrer a lista
-		while(atual != NULL && atual->dados.time_start < ag.time_start){		// Laço de repetição para percorrer a lista
+	} else{		// Caso nï¿½o seja a primeira posiï¿½ï¿½o do vetor executa as instuï¿½ï¿½es abaixo
+		Elem *ante, *atual = *li;		// Criaï¿½ï¿½o de um segundo ponteiro auxiliar para percorrer a lista
+		while(atual != NULL && atual->DATA.time_start < ag.time_start){		// Laï¿½o de repetiï¿½ï¿½o para percorrer a lista
 			ante = atual;
-			atual = atual->prox;		// Segundo ponteiro auxiliar recebe a proxima posição da lista
+			atual = atual->prox;		// Segundo ponteiro auxiliar recebe a proxima posiï¿½ï¿½o da lista
 		}
 
 		if(atual == *li){
@@ -80,29 +81,18 @@ int insere_lista_ordenada(Lista* li, struct agenda ag){		// Função de inserção a
 	}
 }
 
-void imprime_Lista(Lista *li){		// Função de impressão da lista
-	Elem *no = *li;		// Declaraçaõ de um ponteiro auxiliar
-	
-	while(no!=NULL){		// Laço de repetição para percorrer a lista
-//		printf("%d \n", no->dados);		// printf para impressão dos dados na tela
-		no = no->prox;		// Ponteiro auxiliar recebendo a posição do proximo nó 
-	}
-	
-	printf("\n");		// Quebra de linha
-}
-
 int busca_lista(Lista* li, int num, struct agenda *ag){
 	if(li == NULL){
 		return 0;
 	}
 	Elem *no = *li;
-	while(no != NULL && no->dados.time_start != num){
+	while(no != NULL && no->DATA.time_start != num){
 		no = no->prox;
 	}
 	if(no == NULL){
 		return 0;
 	} else {
-		*ag = no->dados;
+		*ag = no->DATA;
 		return 1;
 	}
 }
@@ -115,7 +105,7 @@ int remove_lista(Lista *li, int num){
 		return 0;
 	}
 	Elem *no = *li;
-	while(no != NULL && no->dados.time_start != num){		// Laço de repetição para percorrer a lista
+	while(no != NULL && no->DATA.time_start != num){		// Laï¿½o de repetiï¿½ï¿½o para percorrer a lista
 		no = no->prox;	
 	}
 	if(no == NULL){
@@ -137,36 +127,39 @@ int remove_lista(Lista *li, int num){
 void imprime_Evento(Lista *LI){
     Elem *no = *LI;
 
-    while(no!=NULL){        // Laço de repetição para percorrer a lista
-        if(no->dados.evento == 1){
-            printf("\nASSUNTO: %s", no->dados.subject);
-            printf("HORARIO DE INICIO: %d", no->dados.time_start);
-            printf("\nHORARIO DE TERMINO: %d", no->dados.time_end);
-            printf("\nESFORCO: %d", no->dados.esforco);
-            printf("\nPRIORIDADE: %d", no->dados.priority);
+    while(no!=NULL){        // Laï¿½o de repetiï¿½ï¿½o para percorrer a lista
+        if(no->DATA.evento == 1){
+			printf("\nTAREFA:");
+            printf("\nASSUNTO: %s", no->DATA.subject);
+            printf("HORARIO DE INICIO: %d", no->DATA.time_start);
+            printf("\nHORARIO DE TERMINO: %d", no->DATA.time_end);
+            printf("\nESFORCO: %d", no->DATA.esforco);
+            printf("\nPRIORIDADE: %d", no->DATA.priority);
 
-        } else if(no->dados.evento==2){
-            printf("\nASSUNTO: %s", no->dados.subject);
-            printf("HORARIO DE INICIO: %d", no->dados.time_start);
-            printf("\nHORARIO DE TERMINO: %d", no->dados.time_end);
-            printf("\nLOCAL: %s", no->dados.local);
-            if(no->dados.presenca == 1){
+        } else if(no->DATA.evento==2){
+			printf("\nREUNIAO:");
+            printf("\nASSUNTO: %s", no->DATA.subject);
+            printf("HORARIO DE INICIO: %d", no->DATA.time_start);
+            printf("\nHORARIO DE TERMINO: %d", no->DATA.time_end);
+            printf("\nLOCAL: %s", no->DATA.local);
+            if(no->DATA.presenca == 1){
                 printf("PRESENCA OBRIGATORIA");
             } else{
                 printf("NAO EH OBRIGATORIA A PRESENCA");
             }
 
-        } else if(no->dados.evento==3){
-            printf("\nASSUNTO: %s", no->dados.subject);
-            printf("HORARIO DE INICIO: %d", no->dados.time_start);
-            printf("\nHORARIO DE TERMINO: %d", no->dados.time_end);
-            printf("\nLOCAL: %s", no->dados.local);
-            printf("ANIVERSARIANTE: %s", no->dados.name);
+        } else if(no->DATA.evento==3){
+			printf("\nANIVERSARIO:");
+            printf("\nASSUNTO: %s", no->DATA.subject);
+            printf("HORARIO DE INICIO: %d", no->DATA.time_start);
+            printf("\nHORARIO DE TERMINO: %d", no->DATA.time_end);
+            printf("\nLOCAL: %s", no->DATA.local);
+            printf("ANIVERSARIANTE: %s", no->DATA.name);
 
         } else{
             printf("ERRO!!!");
         }
     	printf("\n");
-        no = no->prox;      // Ponteiro auxiliar recebendo a posição do proximo nó 
+        no = no->prox;      // Ponteiro auxiliar recebendo a posiï¿½ï¿½o do proximo nï¿½ 
     }
 }

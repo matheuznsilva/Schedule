@@ -17,7 +17,7 @@ typedef struct elemento* Lista;
 Lista* cria_lista();
 
 
-// Declaração dos prototipos das funções
+// Declaracao dos prototipos das funcoes
 
 void libera_lista(Lista* li);
 
