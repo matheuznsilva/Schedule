@@ -6,7 +6,7 @@
 #include "funcoes.h"
 
 Login* loading(){
-	int i, count;
+	int I, COUNT;
 
 	Login *LO;		// Declaração de ponteiro
 
@@ -15,26 +15,26 @@ Login* loading(){
 		printf("ERRO NA LEITURA DE DADOS");
 		exit(1);
 	}
-	fscanf(fp, "%d", &count);	
+	fscanf(fp, "%d", &COUNT);	
 	fclose(fp);
 
-	struct info DADOS[count];	// "Variável" do tipo struct aluno
+	struct info DADOS[COUNT];	// "Variável" do tipo struct aluno
 
-	FILE *arq = fopen("login.bin", "rb");
-	if(arq == NULL){
+	FILE *ARQ = fopen("login.bin", "rb");
+	if(ARQ == NULL){
 		printf("ERRO NA LEITURA DE DADOS");
 		exit(1);
 	}
 
-	fread(DADOS, sizeof(struct info), count, arq);
+	fread(DADOS, sizeof(struct info), COUNT, ARQ);
 
-	LO = cria_login();		// Criação da lista	
+	LO = creatLogin();		// Criação da lista	
 
-	for(i=0; i<count; i++){
-		insere_login(LO, DADOS[i]);
+	for(I = 0; I < COUNT; I++){
+		insertLogin(LO, DADOS[I]);
 	}
 
-	fclose(arq);
+	fclose(ARQ);
 
 	return LO;
 }
@@ -56,24 +56,24 @@ int menuLogin() {
 	Login *LO;
 
 	LO = loading();
-    loadingSchedule(LO);
+    //loadingSchedule(LO);
 
 	struct info dataAUX, dataAUX_1;	// "Variável" do tipo struct aluno
 	char EMAIL[N];
 	int PASSWORD, VERIFICATION;
-	int auxA=0, auxB=0, auxC=0, auxD=0;
+	int auxA = 0, auxB = 0, auxC = 0, auxD = 0;
 
 	do{
         system("clear");
         printf("\n============= MENU =============");
-        printf("\n| 1 - ENTRAR                   |"
-    	       "\n| 2 - NOVO USUÁRIO             |"
-               "\n| 3 - REMOVER USUÁRIO          |"
-    	       "\n| 4 - IMPRIMIR LISTA           |"
+        printf("\n| 1 - LOGIN                    |"
+    	       "\n| 2 - NEW USER                 |"
+               "\n| 3 - REMOVE USER              |"
+    	       "\n| 4 - SHOW USER LIST           |"
     	       "\n|                              |"
-    	       "\n| 0 - SAIR                     |");
+    	       "\n| 0 - EXIT                     |");
         printf("\n================================\n\n");
-        printf("Digite sua escolha: ");
+        printf("ENTER YOUR CHOICE: ");
         scanf("%d", &auxA);
         system("clear");
 
@@ -81,23 +81,26 @@ int menuLogin() {
         	
         	case 1:{ //fazer login
                 system("clear");
-                printf("\t\tLOGIN\n\nEMAIL: ");
+                printf("\n\n============= LOGIN =============");
+                printf("\n\nEMAIL: ");
                 setbuf(stdin, NULL);
                 gets(EMAIL);
                 
-                auxB = busca_email(LO, EMAIL, &dataAUX_1);
+                auxB = findEmail(LO, EMAIL, &dataAUX_1);
 
                 if(auxB == 1){
                     do{
                         system("clear");
-                        printf("NOME: %s %s\n", dataAUX_1.Name, dataAUX_1.LastName);
-                        printf("\nSENHA: ");
+                        printf("\n\n============= LOGIN =============");
+                        printf("\nNAME: %s %s", dataAUX_1.Name, dataAUX_1.LastName);
+                        printf("\nPASSWORD: ");
                         scanf("%d", &PASSWORD);
                         if(PASSWORD == dataAUX_1.password){
                             auxD = 0;
                         } else{
                             system("clear");
-                            printf("\t\tLOGIN\n\nSENHAS INCORRETA\n\nDESEJA TENTAR NOVAMENTE? (0 - NAO | 1 - SIM) ");
+                            printf("\n\n============= LOGIN =============");
+                            printf("\n\n-> INCORRECT PASSWORD <- \n\nWANT TO TRY AGAIN? (0 - NO | 1 - YES): ");
                             scanf("%d", &auxD);
                         }
                     }while(auxD != 0);
@@ -105,11 +108,13 @@ int menuLogin() {
                     menu();
                 } else{
                     system("clear");
-                    printf("\t\tLOGIN\n\nUSUÁRIO NÃO ENCONTRADO \nDESEJA CADASTRAR NOVO USUÁRIO? (0 - NAO | 1 - SIM) ");
+                    printf("\n\n============= LOGIN =============");
+                    printf("\n\n-> ERRO 404! - USER NOT FOUND <- \nDO YOU WANT TO REGISTER A NEW USER? (0 - NO | 1 - YES): ");
                     scanf("%d", &auxC);
                     if(auxC == 0){
                         system("clear");
-                        printf("\t\tLOGIN\n\nDESEJA VOLTAR AO INICIO? (0 - NAO | 1 - SIM) ");
+                        printf("\n\n============= LOGIN =============");
+                        printf("\n\nGO BACK TO START? (0 - NO | 1 - YES): ");
                         scanf("%d", &auxC);
                         if (auxC == 0){
                             auxA = 0;
@@ -125,18 +130,21 @@ int menuLogin() {
 
         		do{
                     system("clear");
-                    printf("\t\tCADASTRAR NOVO USUARIO\n\nEMAIL: ");
+                    printf("\n\n====== REGISTER A NEW USER ======");
+                    printf("\n\nEMAIL: ");
                     setbuf(stdin, NULL);
                     gets(dataAUX.email);
 
-                    auxB = busca_email(LO, dataAUX.email, &dataAUX_1);
+                    auxB = findEmail(LO, dataAUX.email, &dataAUX_1);
                     
                     if(auxB == 1){
                         system("clear");
-                        printf("\t\tCADASTRAR NOVO USUARIO\n\nEMAIL JA CADASTRADO\nDESEJA FAZER LOGIN? (0 - NAO | 1 - SIM) ");
+                        printf("\n\n====== REGISTER A NEW USER ======");
+                        printf("\n\n-> EMAIL ALREADY REGISTERED <- \nWANT TO LOGIN? (0 - NO | 1 - YES): ");
                         scanf("%d", &auxC);
                         if (auxC == 0){
-                            printf("\t\tCADASTRAR NOVO USUARIO\n\nDESEJA CADASTRAR NOVO USUÁRIO? (0 - NAO | 1 - SIM) ");
+                            printf("\n\n====== REGISTER A NEW USER ======");
+                            printf("\n\nDO YOU WANT TO REGISTER A NEW USER? (0 - NO | 1 - YES): ");
                             scanf("%d", &auxC);
                             if (auxC == 0){
                                 auxD = 0;
@@ -149,42 +157,45 @@ int menuLogin() {
                         }
                         
                     } else{
-                        printf("\nNOME: ");
+                        printf("NAME: ");
                         setbuf(stdin, NULL);
                         gets(dataAUX.Name);
-                        printf("\nSOBRENOME: ");
+                        printf("LAST NAME: ");
                         setbuf(stdin, NULL);
                         gets(dataAUX.LastName);
 
                         do{
                             system("clear");
-                            printf("\t\tCADASTRAR NOVO USUARIO\n\nEMAIL: %s", dataAUX.email);
-                            printf("\nNOME: %s %s", dataAUX.Name, dataAUX.LastName);
-                            printf("\nSENHA: ");
+                            printf("\n\n====== REGISTER A NEW USER ======");
+                            printf("\n\nEMAIL: %s", dataAUX.email);
+                            printf("\nNAME: %s %s", dataAUX.Name, dataAUX.LastName);
+                            printf("\nPASSWORD: ");
                             scanf("%d", &PASSWORD);
-
-                            printf("\nDIGITE A SENHA NOVAMENTE: ");
+                            printf("ENTER PASSWORD AGAIN: ");
                             scanf("%d", &VERIFICATION);
 
                             if (PASSWORD == VERIFICATION){
                                 dataAUX.password = PASSWORD;
                                 
-                                auxB = insere_login(LO, dataAUX);
+                                auxB = insertLogin(LO, dataAUX);
                                 if(auxB = 1){
                                     system("clear");
-                                    printf("\t\tCADASTRAR NOVO USUARIO\n\nCADASTRO EFETUADO COM SUCESSO ");
+                                    printf("\n\n====== REGISTER A NEW USER ======");
+                                    printf("\n\n-> REGISTRATION SUCCESSFUL! <-");
                                     sleep(1);
                                     auxD = 0;
                                 } else{
                                     system("clear");
-                                    printf("\t\tCADASTRAR NOVO USUARIO\n\nERRO AO CADASTRAR NOVO USUARIO \nTENTE NOVAMENTE ");
+                                    printf("\n\n====== REGISTER A NEW USER ======");
+                                    printf("\n\n-> ERROR WHEN REGISTERING NEW USER <- \nTRY AGAIN");
                                     sleep(1);
                                     auxD = 1;
                                 }
                                 auxC = 0;
                             } else {
                                 system("clear");
-                                printf("\t\tCADASTRAR NOVO USUARIO\n\nSENHAS NAO COINCIDEM \nTENTE NOVAMENTE ");
+                                printf("\n\n====== REGISTER A NEW USER ======");
+                                printf("\n\n-> PASSWORD DON'T MATCH <-\nTRY AGAIN");
                                 sleep(1);                                
                                 auxC = 1;
                             }
@@ -198,36 +209,43 @@ int menuLogin() {
             
             case 3:{
                 system("clear");
-                printf("\t\tREMOVER CONTA\n\nEMAIL: ");
+                printf("\n\n========== REMOVE USER ==========");
+                printf("\n\nEMAIL: ");
                 setbuf(stdin, NULL);
                 gets(dataAUX.email, N, stdin);
 
-                auxB = busca_email(LO, dataAUX.email, &dataAUX_1);
+                auxB = findEmail(LO, dataAUX.email, &dataAUX_1);
                 
                 if(auxB == 1){
-                    printf("\nDESEJA REALIZAR A REMOCAO? (0 - NAO | 1 - SIM) ");
+                    printf("\nDO YOU WANT TO REMOVE? (0 - NO | 1 - YES) ");
                     scanf("%d", &auxC);
                     if(auxC == 1){
                         do{
                             system("clear");
-                            printf("\nSENHA: ");
+                            printf("\n\n========== REMOVE USER ==========");
+                            printf("\nNAME: %s %s \nEMAIL: %s", dataAUX_1.Name, dataAUX_1.LastName, dataAUX_1.email);
+                            printf("\nPASSWORD: ");
                             scanf("%d", &dataAUX.password);
                             if(dataAUX.password == dataAUX_1.password){
-                               auxC = remove_login(LO, dataAUX_1.id);
+                               auxC = removeLogin(LO, dataAUX_1.id);
                                 if(auxC == 1){
                                     system("clear");
-                                    printf("\t\tREMOVE CONTA\n\nUSUARIO REMOVIDO COM SUCESSO ");
+                                    printf("\n\n========== REMOVE USER ==========");
+                                    printf("\n\n-> USER SUCCESSFULLY REMOVED <-");
                                     sleep(1);
                                     
                                     auxD = 0;
                                 } else{
-                                    printf("\t\tREMOVER CONTA\n\nERRO AO REMOVER USUÁRIO \nTENTE NOVAMENTE ");
+                                    printf("\n\n========== REMOVE USER ==========");
+                                    printf("\n\n-> ERROR REMOVING USER <-\nTRY AGAIN");
                                     auxD = 1;
                                     sleep(1);
                                 }
                             } else{
                                 system("clear");
-                                printf("\nSENHAS NÃO CORRESPONDEM! \nDESEJA TENTAR NOVAMENTE? (0 - NAO | 1 - SIM) ");
+                                printf("\n\n========== REMOVE USER ==========");
+                                printf("\n\n-> PASSWORD DON'T MATCH <-");
+                                printf("\nTRY AGAIN? (0 - NO | 1 - YES): ");
                                 scanf("%d", &auxC);
                                 if(auxC == 0){
                                     auxD = 0;
@@ -238,7 +256,9 @@ int menuLogin() {
                         }while(auxD != 0);
                     }
                 } else{
-                    printf("\nUSUARIO NÃO EXISTE \n\nDESEJA VOLTAR AO INICIO? (0 - NAO | 1 - SIM) ");
+                    system("clear");
+                    printf("\n\n========== REMOVE USER ==========");
+                    printf("\n\n-> ERRO 404! - USER NOT FOUND <-\nGO BACK TO START? (0 - NO | 1 - YES): ");
                     scanf("%d", &auxC);
                     if (auxC == 0){
                         auxA = 0;
@@ -250,8 +270,8 @@ int menuLogin() {
         	
             }
             case 4:{
-                imprime_Logins(LO);        // Chamada de Função de impressão da Lista 
-                printf("\nPRESSIONE ENTER PARA CONTINUAR");
+                printLogin(LO);        // Chamada de Função de impressão da Lista 
+                printf("\nPRESS ENTER TO CONTINUE");
                 coordenates();
                 break;
             }
@@ -265,9 +285,9 @@ int menuLogin() {
         } 
     }while(auxA!=0);
 
-    EscreverLogins(LO);
+    writeLogin(LO);
 	
-	libera_logins(LO);		// Chamada de Função de destruição da Lista 
+	freeLogin(LO);		// Chamada de Função de destruição da Lista 
 		
 	return 0;
 }
@@ -276,181 +296,182 @@ int menuLogin() {
 
 int menu() {
 	
-	int a=0;
+	int auxA = 0;
 	
-	Lista *LI;		// Declaracao do ponteiro do tipo Lista
+	List *LI;		// Declaracao do ponteiro do tipo Lista
 	
-	LI = cria_lista();		// Criacao da lista
+	LI = creatList();		// Criacao da lista
 
     sleep(1);
     
     do{
         system("clear");
         printf("\n============= MENU =============");
-        printf("\n| 1 - INSERIR UM EVENTO        |"
-    	       "\n| 2 - VISUALIZAR UM EVENTO     |"
-    	       "\n| 3 - REMOVER UM EVENTO        |"
+        printf("\n| 1 - INSERT EVENT             |"
+    	       "\n| 2 - VIEW EVENT               |"
+    	       "\n| 3 - REMOVE EVENT             |"
                "\n|                              |"
     	       "\n|                              |"
-    	       "\n| 0 - SAIR                     |");
+    	       "\n| 0 - EXIT                     |");
         printf("\n================================\n\n");
-        printf("Digite sua escolha: ");
-        scanf("%d", &a);
+        printf("ENTER YOUR CHOICE: ");
+        scanf("%d", &auxA);
         system("clear");
 
-        switch(a){
+        switch(auxA){
             case 1:{ 
-                inserir_evento(LI);
+                insertEvent(LI);
                 break;
             }
             case 2:{
-                imprime_Evento(LI);
-                printf("\nDIGITE ENTER PARA VOLTAR ");
+                printEvent(LI);
+                printf("\nPRESS ENTER TO CONTINUE");
                 setbuf(stdin,NULL);
                 coordenates();
                 break;
             }
             case 3:{
-                remover_evento(LI);
+                removeEvent(LI);
                 break;
             }
             default:{
                 break;
             }
         } 
-    }while(a!=0);
+    }while(auxA!=0);
 
-    libera_lista(LI);
+    freeList(LI);
 	
 	return 0;
 }
 
 // ==========================================================
 
-int inserir_evento(Lista *LI){
+int insertEvent(List *LI){
 
-	struct agenda AUX;	// "Variável" do tipo struct aluno
+	struct schedule AUX;	// "Variável" do tipo struct aluno
 	
-	int a=0;
+	int auxA = 0;
 
 	do{
         system("clear");
         printf("\n============= MENU =============");
-        printf("\n| 1 - INSERIR UMA TAREFA       |"
-    	       "\n| 2 - INSERIR UMA REUNIAO      |"
-    	       "\n| 3 - INSERIR UM ANIVERSARIO   |"
+        printf("\n| 1 - INSERT TASK              |"
+    	       "\n| 2 - INSERT MEETING           |"
+    	       "\n| 3 - INSERT BIRTHDAY          |"
     	       "\n|                              |"
-    	       "\n| 0 - VOLTAR                   |");
+    	       "\n| 0 - GO BACK                  |");
         printf("\n================================\n\n");
-        printf("Digite sua escolha: ");
-        scanf("%d", &a);
+        printf("ENTER YOUR CHOICE: ");
+        scanf("%d", &auxA);
         system("clear");
 
-        switch(a){
+        switch(auxA){
         	
         	case 1:{
                 
-        		printf("\nASSUNTO: ");
+        		printf("\nSUBJECT: ");
         		setbuf(stdin, NULL);
                 fgets(AUX.subject, N, stdin);
-                printf("\nHORARIO DE INICIO: ");
-                scanf("%d", &AUX.time_start);
-                printf("\nHORARIO DE TERMINO: ");
-                scanf("%d", &AUX.time_end);
-                printf("\nESFORCO: ");
-                scanf("%d", &AUX.esforco);
-                printf("\nPRIORIDADE: ");
+                printf("\nSTART TIME: ");
+                scanf("%d", &AUX.startTime);
+                printf("\nEND TIME: ");
+                scanf("%d", &AUX.endTime);
+                printf("\nEFFORT: ");
+                scanf("%d", &AUX.effort);
+                printf("\nPRIORITY: ");
                 scanf("%d", &AUX.priority);
-                AUX.evento = 1;
+                AUX.event = 1;
 
-                insere_lista_ordenada(LI, AUX);
+                insertList(LI, AUX);
                 break;
             }
 
             case 2:{ 
 
-        		printf("\nASSUNTO: ");
+        		printf("\nSUBJECT: ");
         		setbuf(stdin, NULL);
                 fgets(AUX.subject, N, stdin);
-                printf("\nHORARIO DE INICIO: ");
-                scanf("%d", &AUX.time_start);
-                printf("\nHORARIO DE TERMINO: ");
-                scanf("%d", &AUX.time_end);
+                printf("\nSTART TIME: ");
+                scanf("%d", &AUX.startTime);
+                printf("\nEND TIME: ");
+                scanf("%d", &AUX.endTime);
                 printf("\nLOCAL: ");
         		setbuf(stdin, NULL);
                 fgets(AUX.local, N, stdin);
-                printf("\nPRESENCA OBRIGATORIA(1-sim/0-nao): ");
-                scanf("%d", &AUX.presenca);
-                AUX.evento = 2;
+                printf("\nIS YOUR PRESENCE MANDATORY? (0 - NO | 1 - YES): ");
+                scanf("%d", &AUX.presence);
+                AUX.event = 2;
 
-                insere_lista_ordenada(LI, AUX);
+                insertList(LI, AUX);
                 break;
             }
             
             case 3:{ 
 
-        		printf("\nASSUNTO: ");
+        		printf("\nSUBJECT: ");
         		setbuf(stdin, NULL);
                 fgets(AUX.subject, N, stdin);
-                printf("\nHORARIO DE INICIO: ");
-                scanf("%d", &AUX.time_start);
-                printf("\nHORARIO DE TERMINO: ");
-                scanf("%d", &AUX.time_end);
+                printf("\nSTART TIME: ");
+                scanf("%d", &AUX.startTime);
+                printf("\nEND TIME: ");
+                scanf("%d", &AUX.endTime);
                 printf("\nLOCAL: ");
         		setbuf(stdin, NULL);
                 fgets(AUX.local, N, stdin);
-                printf("\nNOME ANIVERSARIANTE: ");
+                printf("\nBIRTHDAY NAME: ");
         		setbuf(stdin, NULL);
                 fgets(AUX.name, N, stdin);
-                AUX.evento = 3;
+                AUX.event = 3;
                 
-                insere_lista_ordenada(LI, AUX);
+                insertList(LI, AUX);
                 break;
             }
             default:{
                 break;
             }
         } 
-    }while(a!=0);
+    }while(auxA!=0);
 }
 
-int visualizar_evento(Lista *LI){
-    struct agenda AUX;  // "Variável" do tipo struct aluno
+int viewEvent(List *LI){
     
-    int a=0, B, num=0;
+    struct schedule AUX;  // "Variável" do tipo struct aluno
+    
+    int auxA = 0, NUM = 0;
 
     do{
         system("clear");
         printf("\n============= MENU =============");
-        printf("\n| 1 - BUSCAR UMA TAREFA        |"
-               "\n| 2 - BUSCAR UMA REUNIAO       |"
-               "\n| 3 - BUSCAR UM ANIVERSARIO    |"
+        printf("\n| 1 - FIND TASK                |"
+               "\n| 2 - FIND MEETING             |"
+               "\n| 3 - FIND BIRTHDAY            |"
                "\n|                              |"
-               "\n| 0 - VOLTAR                   |");
+               "\n| 0 - GO BACK                  |");
         printf("\n================================\n\n");
-        printf("Digite sua escolha: ");
-        scanf("%d", &a);
+        printf("ENTER YOUR CHOICE: ");
+        scanf("%d", &auxA);
         system("clear");
 
-        switch(a){
+        switch(auxA){
             
             case 1:{
-                printf("HORARIO: ");
-                scanf("%d", &num);
-                busca_lista(LI, num, &AUX);
-                //imprime_Evento(1, AUX);
-                printf("\n\n DIGITE ENTER PARA VOLTAR ");
+                printf("TIME: ");
+                scanf("%d", &NUM);
+                findList(LI, NUM, &AUX);
+                //printEvent(1, AUX);
+                printf("\nPRESS ENTER TO CONTINUE");
                 setbuf(stdin,NULL);
                 coordenates();
                 break;
             }
 
             case 2:{ 
-                printf("HORARIO: ");
-                scanf("%d", &num);
-                busca_lista(LI, num, &AUX);
-                //imprime_Evento(2, AUX);
-                printf("\n\n DIGITE ENTER PARA VOLTAR ");
+                printf("TIME: ");
+                scanf("%d", &NUM);
+                findList(LI, NUM, &AUX);
+                //printEvent(2, AUX);
+                printf("\nPRESS ENTER TO CONTINUE");
                 setbuf(stdin,NULL);
                 coordenates();
                 
@@ -458,11 +479,11 @@ int visualizar_evento(Lista *LI){
             }
             
             case 3:{ 
-                printf("HORARIO: ");
-                scanf("%d", &num);
-                busca_lista(LI, num, &AUX);
-                //imprime_Evento(3, AUX);
-                printf("\n\n DIGITE ENTER PARA VOLTAR ");
+                printf("TIME: ");
+                scanf("%d", &NUM);
+                findList(LI, NUM, &AUX);
+                //printEvent(3, AUX);
+                printf("\nPRESS ENTER TO CONTINUE");
                 setbuf(stdin,NULL);
                 coordenates();
                 break;
@@ -472,42 +493,44 @@ int visualizar_evento(Lista *LI){
             }
 
         }
-    }while(a!=0);   
+    }while(auxA!=0);   
 }
 
-int remover_evento(Lista *LI){
-    int a=0, num=0;
+int removeEvent(List *LI){
+    int auxA = 0, NUM = 0;
 
     do{
         system("clear");
         printf("\n============= MENU =============");
-        printf("\n| 1 - REMOVER UMA TAREFA       |"
-               "\n| 2 - REMOVER UMA REUNIAO      |"
-               "\n| 3 - REMOVER UM ANIVERSARIO   |"
+        printf("\n| 1 - REMOVE TASK              |"
+               "\n| 2 - REMOVE MEETING           |"
+               "\n| 3 - REMOVE BIRTHDAY          |"
                "\n|                              |"
-               "\n| 0 - VOLTAR                   |");
+               "\n| 0 - GO BACK                  |");
         printf("\n================================\n\n");
-        printf("Digite sua escolha: ");
-        scanf("%d", &a);
+        printf("ENTER YOUR CHOICE: ");
+        scanf("%d", &auxA);
         system("clear");
 
-        switch(a){
+        switch(auxA){
             
             case 1:{
-                printf("HORARIO: ");
-                scanf("%d", &num);
-                remove_lista(LI, num);                
-                printf("\n\n DIGITE ENTER PARA VOLTAR ");
+                printf("\n========= REMOVE TASK ==========");
+                printf("TIME: ");
+                scanf("%d", &NUM);
+                removeList(LI, NUM);                
+                printf("\n\nPRESS ENTER TO CONTINUE");
                 setbuf(stdin,NULL);
                 coordenates();
                 break;
             }
 
             case 2:{ 
-                printf("HORARIO: ");
-                scanf("%d", &num);
-                remove_lista(LI, num);                
-                printf("\n\n DIGITE ENTER PARA VOLTAR ");
+                printf("\n======== REMOVE MEETING ========");
+                printf("TIME: ");
+                scanf("%d", &NUM);
+                removeList(LI, NUM);                
+                printf("\n\nPRESS ENTER TO CONTINUE");
                 setbuf(stdin,NULL);
                 coordenates();
                 
@@ -515,10 +538,11 @@ int remover_evento(Lista *LI){
             }
             
             case 3:{ 
-                printf("HORARIO: ");
-                scanf("%d", &num);
-                remove_lista(LI, num);                
-                printf("\n\n DIGITE ENTER PARA VOLTAR ");
+                printf("\n======= REMOVE BIRTHDAY ========");
+                printf("TIME: ");
+                scanf("%d", &NUM);
+                removeList(LI, NUM);                
+                printf("\n\nPRESS ENTER TO CONTINUE");
                 setbuf(stdin,NULL);
                 coordenates();
                 break;
@@ -528,37 +552,37 @@ int remover_evento(Lista *LI){
             }
 
         }
-    }while(a!=0);   
+    }while(auxA!=0);   
 }
 
-/*void imprime_Evento(int i, struct agenda ag){
-    if(i==1){
-        printf("\nASSUNTO: %s", ag.subject);
-        printf("HORARIO DE INICIO: %d", ag.time_start);
-        printf("\nHORARIO DE TERMINO: %d", ag.time_end);
-        printf("\nESFORCO: %d", ag.esforco);
-        printf("\nPRIORIDADE: %d", ag.priority);
+/*void printEvent(int I, struct schedule SC){
+    if(I == 1){
+        printf("\nASSUNTO: %s", SC.subject);
+        printf("HORARIO DE INICIO: %d", SC.startTime);
+        printf("\nHORARIO DE TERMINO: %d", SC.endTime);
+        printf("\nESFORCO: %d", SC.effort);
+        printf("\nPRIORIDADE: %d", SC.priority);
 
-    } else if(i==2){
-        printf("\nASSUNTO: %s", ag.subject);
-        printf("HORARIO DE INICIO: %d", ag.time_start);
-        printf("\nHORARIO DE TERMINO: %d", ag.time_end);
-        printf("\nLOCAL: %s", ag.local);
-        if(ag.presenca == 1){
+    } else if(I == 2){
+        printf("\nASSUNTO: %s", SC.subject);
+        printf("HORARIO DE INICIO: %d", SC.startTime);
+        printf("\nHORARIO DE TERMINO: %d", SC.endTime);
+        printf("\nLOCAL: %s", SC.local);
+        if(SC.presence == 1){
             printf("\nPRESENCA OBRIGATORIA");
         } else{
             printf("\nNAO É OBRIGATORIA A PRESENCA");
         }
 
-    } else if(i==3){
-        printf("\nASSUNTO: %s", ag.subject);
-        printf("HORARIO DE INICIO: %d", ag.time_start);
-        printf("\nHORARIO DE TERMINO: %d", ag.time_end);
-        printf("\nLOCAL: %s", ag.local);
-        printf("\nANIVERSARIANTE: %s", ag.name);
+    } else if(I == 3){
+        printf("\nASSUNTO: %s", SC.subject);
+        printf("HORARIO DE INICIO: %d", SC.startTime);
+        printf("\nHORARIO DE TERMINO: %d", SC.endTime);
+        printf("\nLOCAL: %s", SC.local);
+        printf("\nANIVERSARIANTE: %s", SC.name);
 
     } else{
         printf("ERRO!!!");
     }
-} */
+}*/
 

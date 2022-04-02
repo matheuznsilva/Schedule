@@ -6,28 +6,28 @@ struct info{
 	char LastName[N];
 	char email[N];
 	int password;
-	Lista *LI;
+	List *LI;
 };
 
-typedef struct elemento* Login;
+typedef struct element* Login;
 
-Login* cria_login();
+Login* creatLogin();
 
 // Declaracao dos prototipos das funcoes
 
-void libera_logins(Login* LO);
+void freeLogin(Login* LO);
 
-int busca_email(Login* LO, char email[], struct info *al);
+int findEmail(Login* LO, char email[], struct info *al);
 
-int insere_login(Login* LO, struct info al);
+int insertLogin(Login* LO, struct info al);
 
-int remove_login(Login* LO, int num);
+int removeLogin(Login* LO, int num);
 
-void imprime_Logins(Login *LO);
+void printLogin(Login *LO);
 
-void EscreverLogins(Login *LO);
+void writeLogin(Login *LO);
 
-void loadingData(Lista* LI, char email[]);
+//void loadingData(Lista* LI, char email[]);
 
-void loadingSchedule(Login* LO);
+//void loadingSchedule(Login* LO);
 

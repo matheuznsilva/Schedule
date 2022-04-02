@@ -1,32 +1,32 @@
 #define N 50
 
-struct agenda{
+struct schedule{
 	char subject[N];
 	char local[N];
 	char name[N];
-	int time_start;
-	int time_end;
-	int esforco;
+	int startTime;
+	int endTime;
+	int effort;
 	int priority;
-	int presenca;
-	int evento;
+	int presence;
+	int event;
 };
 
-typedef struct elemento* Lista;
+typedef struct component* List;
 
-Lista* cria_lista();
+List* creatList();
 
 
 // Declaracao dos prototipos das funcoes
 
-void libera_lista(Lista* li);
+void freeList(List* LI);
 
-int busca_lista(Lista* li, int num, struct agenda *ag);
+int findList(List* LI, int num, struct schedule *SC);
 
-int insere_lista_ordenada(Lista* li, struct agenda ag);
+int insertList(List* LI, struct schedule SC);
 
-int remove_lista(Lista* li, int num);
+int removeList(List* LI, int num);
 
-void imprime_Lista(Lista *li);
+void printList(List *LI);
 
-void imprime_Evento(Lista *LI);
+void printEvent(List *LI);
