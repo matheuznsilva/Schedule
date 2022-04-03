@@ -2,7 +2,7 @@
 
 Login* loading();
 
-int coordenates();
+int coordinates();
 
 int menuLogin();
 

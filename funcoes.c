@@ -41,8 +41,7 @@ Login* loading(){
 
 
 
-
-int coordenates(){
+int coordinates(){
 	char AUX[1];
     setbuf(stdin,NULL);
 	gets(AUX);
@@ -50,6 +49,7 @@ int coordenates(){
 	return AUX[0];
 }
 
+//====================================================
 
 int menuLogin() {
 	
@@ -180,29 +180,33 @@ int menuLogin() {
                                 auxB = insertLogin(LO, dataAUX);
                                 if(auxB = 1){
                                     system("clear");
-                                    printf("\n\n====== REGISTER A NEW USER ======");
+                                    printf("\n====== REGISTER A NEW USER ======");
                                     printf("\n\n-> REGISTRATION SUCCESSFUL! <-");
+                            		printf("\n\n================================");
+                                    printf("\n");
                                     sleep(1);
                                     auxD = 0;
                                 } else{
                                     system("clear");
-                                    printf("\n\n====== REGISTER A NEW USER ======");
+                                    printf("\n========== REGISTER A NEW USER =========");
                                     printf("\n\n-> ERROR WHEN REGISTERING NEW USER <- \nTRY AGAIN");
+                            		printf("\n\n=======================================");
+                                    printf("\n");
                                     sleep(1);
                                     auxD = 1;
                                 }
                                 auxC = 0;
                             } else {
                                 system("clear");
-                                printf("\n\n====== REGISTER A NEW USER ======");
+                                printf("\n====== REGISTER A NEW USER ======");
                                 printf("\n\n-> PASSWORD DON'T MATCH <-\nTRY AGAIN");
+                            	printf("\n\n================================");
+                                printf("\n");
                                 sleep(1);                                
                                 auxC = 1;
                             }
                         }while(auxC != 0);
-
                     }
-
                 }while(auxD != 0);
                 break;
             }
@@ -222,7 +226,7 @@ int menuLogin() {
                     if(auxC == 1){
                         do{
                             system("clear");
-                            printf("\n\n========== REMOVE USER ==========");
+                            printf("\n========== REMOVE USER ==========");
                             printf("\nNAME: %s %s \nEMAIL: %s", dataAUX_1.Name, dataAUX_1.LastName, dataAUX_1.email);
                             printf("\nPASSWORD: ");
                             scanf("%d", &dataAUX.password);
@@ -230,22 +234,26 @@ int menuLogin() {
                                auxC = removeLogin(LO, dataAUX_1.id);
                                 if(auxC == 1){
                                     system("clear");
-                                    printf("\n\n========== REMOVE USER ==========");
+                                    printf("\n========== REMOVE USER ==========");
                                     printf("\n\n-> USER SUCCESSFULLY REMOVED <-");
+                                    printf("\n\n=================================");
+                                    printf("\n");
                                     sleep(1);
-                                    
                                     auxD = 0;
                                 } else{
-                                    printf("\n\n========== REMOVE USER ==========");
+                                    printf("\n========== REMOVE USER ==========");
                                     printf("\n\n-> ERROR REMOVING USER <-\nTRY AGAIN");
-                                    auxD = 1;
+                                    printf("\n\n=================================");
+                                    printf("\n");
                                     sleep(1);
+                                    auxD = 1;
                                 }
                             } else{
                                 system("clear");
-                                printf("\n\n========== REMOVE USER ==========");
+                                printf("\n========== REMOVE USER ==========");
                                 printf("\n\n-> PASSWORD DON'T MATCH <-");
-                                printf("\nTRY AGAIN? (0 - NO | 1 - YES): ");
+                                printf("\n\n=================================");
+                                printf("\n\nTRY AGAIN? (0 - NO | 1 - YES): ");
                                 scanf("%d", &auxC);
                                 if(auxC == 0){
                                     auxD = 0;
@@ -257,22 +265,24 @@ int menuLogin() {
                     }
                 } else{
                     system("clear");
-                    printf("\n\n========== REMOVE USER ==========");
-                    printf("\n\n-> ERRO 404! - USER NOT FOUND <-\nGO BACK TO START? (0 - NO | 1 - YES): ");
+                    printf("\n========== REMOVE USER ==========");
+                    printf("\n\n-> ERRO 404! - USER NOT FOUND <-");
+                    printf("\n\n=================================");
+                    printf("\n\nGO BACK TO START? (0 - NO | 1 - YES): ");
                     scanf("%d", &auxC);
                     if (auxC == 0){
                         auxA = 0;
                     } else if(auxC == 1){
                         auxA = 1;
                     }
+                    printf("\n");
                 }
                 break;
-        	
             }
             case 4:{
                 printLogin(LO);        // Chamada de Função de impressão da Lista 
                 printf("\nPRESS ENTER TO CONTINUE");
-                coordenates();
+                coordinates();
                 break;
             }
             case 0:{
@@ -298,11 +308,9 @@ int menu() {
 	
 	int auxA = 0;
 	
-	List *LI;		// Declaracao do ponteiro do tipo Lista
+	List *LI;		// Declaração do ponteiro do tipo Lista
 	
 	LI = creatList();		// Criacao da lista
-
-    sleep(1);
     
     do{
         system("clear");
@@ -327,7 +335,7 @@ int menu() {
                 printEvent(LI);
                 printf("\nPRESS ENTER TO CONTINUE");
                 setbuf(stdin,NULL);
-                coordenates();
+                coordinates();
                 break;
             }
             case 3:{
@@ -360,6 +368,7 @@ int insertEvent(List *LI){
     	       "\n| 2 - INSERT MEETING           |"
     	       "\n| 3 - INSERT BIRTHDAY          |"
     	       "\n|                              |"
+    	       "\n|                              |"
     	       "\n| 0 - GO BACK                  |");
         printf("\n================================\n\n");
         printf("ENTER YOUR CHOICE: ");
@@ -369,7 +378,7 @@ int insertEvent(List *LI){
         switch(auxA){
         	
         	case 1:{
-                
+                printf("\n========= INSERT TASK ==========");
         		printf("\nSUBJECT: ");
         		setbuf(stdin, NULL);
                 fgets(AUX.subject, N, stdin);
@@ -388,7 +397,7 @@ int insertEvent(List *LI){
             }
 
             case 2:{ 
-
+                printf("\n======== INSERT MEETING ========");
         		printf("\nSUBJECT: ");
         		setbuf(stdin, NULL);
                 fgets(AUX.subject, N, stdin);
@@ -408,7 +417,7 @@ int insertEvent(List *LI){
             }
             
             case 3:{ 
-
+                printf("\n======= INSERT BIRTHDAY ========");
         		printf("\nSUBJECT: ");
         		setbuf(stdin, NULL);
                 fgets(AUX.subject, N, stdin);
@@ -446,6 +455,7 @@ int viewEvent(List *LI){
         printf("\n| 1 - FIND TASK                |"
                "\n| 2 - FIND MEETING             |"
                "\n| 3 - FIND BIRTHDAY            |"
+    	       "\n|                              |"
                "\n|                              |"
                "\n| 0 - GO BACK                  |");
         printf("\n================================\n\n");
@@ -462,7 +472,7 @@ int viewEvent(List *LI){
                 //printEvent(1, AUX);
                 printf("\nPRESS ENTER TO CONTINUE");
                 setbuf(stdin,NULL);
-                coordenates();
+                coordinates();
                 break;
             }
 
@@ -473,8 +483,7 @@ int viewEvent(List *LI){
                 //printEvent(2, AUX);
                 printf("\nPRESS ENTER TO CONTINUE");
                 setbuf(stdin,NULL);
-                coordenates();
-                
+                coordinates();
                 break;
             }
             
@@ -485,7 +494,7 @@ int viewEvent(List *LI){
                 //printEvent(3, AUX);
                 printf("\nPRESS ENTER TO CONTINUE");
                 setbuf(stdin,NULL);
-                coordenates();
+                coordinates();
                 break;
             }
             default:{
@@ -505,6 +514,7 @@ int removeEvent(List *LI){
         printf("\n| 1 - REMOVE TASK              |"
                "\n| 2 - REMOVE MEETING           |"
                "\n| 3 - REMOVE BIRTHDAY          |"
+    	       "\n|                              |"
                "\n|                              |"
                "\n| 0 - GO BACK                  |");
         printf("\n================================\n\n");
@@ -516,73 +526,42 @@ int removeEvent(List *LI){
             
             case 1:{
                 printf("\n========= REMOVE TASK ==========");
-                printf("TIME: ");
+                printf("\nTIME: ");
                 scanf("%d", &NUM);
                 removeList(LI, NUM);                
+		        printf("\n================================");
                 printf("\n\nPRESS ENTER TO CONTINUE");
                 setbuf(stdin,NULL);
-                coordenates();
+                coordinates();
                 break;
             }
 
             case 2:{ 
                 printf("\n======== REMOVE MEETING ========");
-                printf("TIME: ");
+                printf("\nTIME: ");
                 scanf("%d", &NUM);
                 removeList(LI, NUM);                
+		        printf("\n================================");
                 printf("\n\nPRESS ENTER TO CONTINUE");
                 setbuf(stdin,NULL);
-                coordenates();
-                
+                coordinates();
                 break;
             }
             
             case 3:{ 
                 printf("\n======= REMOVE BIRTHDAY ========");
-                printf("TIME: ");
+                printf("\nTIME: ");
                 scanf("%d", &NUM);
-                removeList(LI, NUM);                
+                removeList(LI, NUM);
+		        printf("\n================================");
                 printf("\n\nPRESS ENTER TO CONTINUE");
                 setbuf(stdin,NULL);
-                coordenates();
+                coordinates();
                 break;
             }
             default:{
                 break;
             }
-
         }
     }while(auxA!=0);   
 }
-
-/*void printEvent(int I, struct schedule SC){
-    if(I == 1){
-        printf("\nASSUNTO: %s", SC.subject);
-        printf("HORARIO DE INICIO: %d", SC.startTime);
-        printf("\nHORARIO DE TERMINO: %d", SC.endTime);
-        printf("\nESFORCO: %d", SC.effort);
-        printf("\nPRIORIDADE: %d", SC.priority);
-
-    } else if(I == 2){
-        printf("\nASSUNTO: %s", SC.subject);
-        printf("HORARIO DE INICIO: %d", SC.startTime);
-        printf("\nHORARIO DE TERMINO: %d", SC.endTime);
-        printf("\nLOCAL: %s", SC.local);
-        if(SC.presence == 1){
-            printf("\nPRESENCA OBRIGATORIA");
-        } else{
-            printf("\nNAO É OBRIGATORIA A PRESENCA");
-        }
-
-    } else if(I == 3){
-        printf("\nASSUNTO: %s", SC.subject);
-        printf("HORARIO DE INICIO: %d", SC.startTime);
-        printf("\nHORARIO DE TERMINO: %d", SC.endTime);
-        printf("\nLOCAL: %s", SC.local);
-        printf("\nANIVERSARIANTE: %s", SC.name);
-
-    } else{
-        printf("ERRO!!!");
-    }
-}*/
-

@@ -126,40 +126,51 @@ int removeList(List *LI, int num){
 
 void printEvent(List *LI){
     Comp *CO = *LI;
+	if(CO == NULL){
+		printf("\n================================");
+		printf("\n    -> NO EVENT REGISTERED <-   ");
+		printf("\n================================");
 
-    while(CO!=NULL){        // La�o de repeti��o para percorrer a lista
-        if(CO->DATA.event == 1){
-			printf("\nTAREFA:");
-            printf("\nASSUNTO: %s", CO->DATA.subject);
-            printf("HORARIO DE INICIO: %d", CO->DATA.startTime);
-            printf("\nHORARIO DE TERMINO: %d", CO->DATA.endTime);
-            printf("\nESFORCO: %d", CO->DATA.effort);
-            printf("\nPRIORIDADE: %d", CO->DATA.priority);
+	} else{
+		while(CO!=NULL){        // La�o de repeti��o para percorrer a lista
+			if(CO->DATA.event == 1){
+				printf("\n============= TASK =============");
+				printf("\nSUBJECT: %s", CO->DATA.subject);
+				printf("START TIME: %d", CO->DATA.startTime);
+				printf("\nEND TIME: %d", CO->DATA.endTime);
+				printf("\nEFFORT: %d", CO->DATA.effort);
+				printf("\nPRIORITY: %d", CO->DATA.priority);
 
-        } else if(CO->DATA.event==2){
-			printf("\nREUNIAO:");
-            printf("\nASSUNTO: %s", CO->DATA.subject);
-            printf("HORARIO DE INICIO: %d", CO->DATA.startTime);
-            printf("\nHORARIO DE TERMINO: %d", CO->DATA.endTime);
-            printf("\nLOCAL: %s", CO->DATA.local);
-            if(CO->DATA.presence == 1){
-                printf("PRESENCA OBRIGATORIA");
-            } else{
-                printf("NAO EH OBRIGATORIA A PRESENCA");
-            }
+			} else if(CO->DATA.event==2){
+				printf("\n=========== MEETING ============");
+				printf("\nSUBJECT: %s", CO->DATA.subject);
+				printf("START TIME: %d", CO->DATA.startTime);
+				printf("\nEND TIME: %d", CO->DATA.endTime);
+				printf("\nLOCAL: %s", CO->DATA.local);
+				if(CO->DATA.presence == 1){
+					printf("ATTENDANCE: MANDATORY");
+				} else{
+					printf("ATTENDANCE: NOT MANDATORY");
+				}
 
-        } else if(CO->DATA.event==3){
-			printf("\nANIVERSARIO:");
-            printf("\nASSUNTO: %s", CO->DATA.subject);
-            printf("HORARIO DE INICIO: %d", CO->DATA.startTime);
-            printf("\nHORARIO DE TERMINO: %d", CO->DATA.endTime);
-            printf("\nLOCAL: %s", CO->DATA.local);
-            printf("ANIVERSARIANTE: %s", CO->DATA.name);
+			} else if(CO->DATA.event==3){
+				printf("\n=========== BIRTHDAY ===========");
+				printf("\nANIVERSARIO:");
+				printf("\nASSUNTO: %s", CO->DATA.subject);
+				printf("HORARIO DE INICIO: %d", CO->DATA.startTime);
+				printf("\nHORARIO DE TERMINO: %d", CO->DATA.endTime);
+				printf("\nLOCAL: %s", CO->DATA.local);
+				printf("ANIVERSARIANTE: %s", CO->DATA.name);
 
-        } else{
-            printf("ERRO!!!");
-        }
-    	printf("\n");
-        CO = CO->prox;      // Ponteiro auxiliar recebendo a posi��o do proximo n� 
-    }
+			} else{
+				printf("\n================================");
+				printf("\t\t -> ERRO <-");
+				printf("\n================================");
+			}
+			printf("\n");
+			CO = CO->prox;      // Ponteiro auxiliar recebendo a posi��o do proximo n� 
+		}
+		
+		printf("\n================================");
+	}
 }

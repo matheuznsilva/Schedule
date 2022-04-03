@@ -67,9 +67,10 @@ int insertLogin(Login* LO, struct info al){		// Fun��o de inser��o ao fi
 
 void printLogin(Login *LO){		// Fun��o de impress�o da lista
 	Elem *NO = *LO;		// Declara�a� de um ponteiro auxiliar
-	
+    printf("\n======= REGISTERED USERS =======");
 	while(NO!=NULL){		// La�o de repeti��o para percorrer a lista
-		printf("\nID: %d \nNAME: %s %s \nEMAIL: %s \nPASSWORD: %d\n", NO->DICE.id, NO->DICE.Name, NO->DICE.LastName, NO->DICE.email, NO->DICE.password);
+		printf("\nID: %d \nNAME: %s %s \nEMAIL: %s" /*\nPASSWORD: %d\n"*/, NO->DICE.id, NO->DICE.Name, NO->DICE.LastName, NO->DICE.email/*, NO->DICE.password*/);
+		printf("\n================================");
 		NO = NO->next;		// Ponteiro auxiliar recebendo a posi��o do proximo n� 
 	}
 	printf("\n");		// Quebra de linha
@@ -134,7 +135,9 @@ void writeLogin(Login *LO){
 	
 	FILE *fp = fopen("tamanho.txt", "w");
 	if(fp == NULL){
-		printf("ERRO NA LEITURA DE DADOS");
+		printf("\n================================");
+		printf(" -> ERRO NA LEITURA DE DADOS <-");
+		printf("\n================================");
 		exit(1);
 	}
 	fprintf(fp, "%d", COUNT);//(count, fp);	
@@ -143,7 +146,9 @@ void writeLogin(Login *LO){
     FILE *arq = fopen("login.bin", "w+b");
     
     if(arq == NULL){
-        printf("ERRO NA LEITURA DE DADOS");
+        printf("\n================================");
+		printf(" -> ERRO NA LEITURA DE DADOS <-");
+		printf("\n================================");
         exit(1);
     }
 
