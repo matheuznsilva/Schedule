@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include "ListaDinEncadDupla.h"
 #include "login.h"
 #include "funcoes.h"
@@ -12,7 +13,9 @@ Login* loading(){
 
 	FILE *fp = fopen("tamanho.txt", "r");
 	if(fp == NULL){
-		printf("ERRO NA LEITURA DE DADOS");
+		printf("\n================================");
+		printf("\n\n-> ERROR 404 - FILE NOT FOUND <-");
+		printf("\n\n================================");
 		exit(1);
 	}
 	fscanf(fp, "%d", &COUNT);	
@@ -22,7 +25,9 @@ Login* loading(){
 
 	FILE *ARQ = fopen("login.bin", "rb");
 	if(ARQ == NULL){
-		printf("ERRO NA LEITURA DE DADOS");
+		printf("\n================================");
+		printf("\n\n-> ERROR 404 - FILE NOT FOUND <-");
+		printf("\n\n================================");
 		exit(1);
 	}
 
@@ -42,9 +47,9 @@ Login* loading(){
 
 
 int coordinates(){
-	char AUX[1];
+	char AUX[2];
     setbuf(stdin,NULL);
-	gets(AUX);
+	fgets(AUX, 2, stdin);
     setbuf(stdin,NULL);
 	return AUX[0];
 }
@@ -81,7 +86,7 @@ int menuLogin() {
         	
         	case 1:{ //fazer login
                 system("clear");
-                printf("\n\n============= LOGIN =============");
+                printf("\n============= LOGIN =============");
                 printf("\n\nEMAIL: ");
                 setbuf(stdin, NULL);
                 gets(EMAIL);
@@ -91,15 +96,15 @@ int menuLogin() {
                 if(auxB == 1){
                     do{
                         system("clear");
-                        printf("\n\n============= LOGIN =============");
-                        printf("\nNAME: %s %s", dataAUX_1.Name, dataAUX_1.LastName);
+                        printf("\n============= LOGIN =============");
+                        printf("\n\nNAME: %s %s", dataAUX_1.Name, dataAUX_1.LastName);
                         printf("\nPASSWORD: ");
                         scanf("%d", &PASSWORD);
                         if(PASSWORD == dataAUX_1.password){
                             auxD = 0;
                         } else{
                             system("clear");
-                            printf("\n\n============= LOGIN =============");
+                            printf("\n============= LOGIN =============");
                             printf("\n\n-> INCORRECT PASSWORD <- \n\nWANT TO TRY AGAIN? (0 - NO | 1 - YES): ");
                             scanf("%d", &auxD);
                         }
@@ -108,12 +113,14 @@ int menuLogin() {
                     menu();
                 } else{
                     system("clear");
-                    printf("\n\n============= LOGIN =============");
-                    printf("\n\n-> ERRO 404! - USER NOT FOUND <- \nDO YOU WANT TO REGISTER A NEW USER? (0 - NO | 1 - YES): ");
+                    printf("\n============= LOGIN =============");
+                    printf("\n\n   -> ERROR - USER NOT FOUND <- ");
+                    printf("\n\n=================================");
+                    printf("\nDO YOU WANT TO REGISTER A NEW USER? (0 - NO | 1 - YES): ");
                     scanf("%d", &auxC);
                     if(auxC == 0){
                         system("clear");
-                        printf("\n\n============= LOGIN =============");
+                        printf("\n============= LOGIN =============");
                         printf("\n\nGO BACK TO START? (0 - NO | 1 - YES): ");
                         scanf("%d", &auxC);
                         if (auxC == 0){
@@ -130,7 +137,7 @@ int menuLogin() {
 
         		do{
                     system("clear");
-                    printf("\n\n====== REGISTER A NEW USER ======");
+                    printf("\n====== REGISTER A NEW USER ======");
                     printf("\n\nEMAIL: ");
                     setbuf(stdin, NULL);
                     gets(dataAUX.email);
@@ -139,11 +146,13 @@ int menuLogin() {
                     
                     if(auxB == 1){
                         system("clear");
-                        printf("\n\n====== REGISTER A NEW USER ======");
-                        printf("\n\n-> EMAIL ALREADY REGISTERED <- \nWANT TO LOGIN? (0 - NO | 1 - YES): ");
+                        printf("\n====== REGISTER A NEW USER ======");
+                        printf("\n\n  -> EMAIL ALREADY REGISTERED <- ");
+                        printf("\n\n=================================");
+                        printf("\nWANT TO LOGIN? (0 - NO | 1 - YES): ");
                         scanf("%d", &auxC);
                         if (auxC == 0){
-                            printf("\n\n====== REGISTER A NEW USER ======");
+                            printf("\n====== REGISTER A NEW USER ======");
                             printf("\n\nDO YOU WANT TO REGISTER A NEW USER? (0 - NO | 1 - YES): ");
                             scanf("%d", &auxC);
                             if (auxC == 0){
@@ -189,7 +198,7 @@ int menuLogin() {
                                 } else{
                                     system("clear");
                                     printf("\n========== REGISTER A NEW USER =========");
-                                    printf("\n\n-> ERROR WHEN REGISTERING NEW USER <- \nTRY AGAIN");
+                                    printf("\n\n -> ERROR WHEN REGISTERING NEW USER <- \n TRY AGAIN");
                             		printf("\n\n=======================================");
                                     printf("\n");
                                     sleep(1);
@@ -199,7 +208,7 @@ int menuLogin() {
                             } else {
                                 system("clear");
                                 printf("\n====== REGISTER A NEW USER ======");
-                                printf("\n\n-> PASSWORD DON'T MATCH <-\nTRY AGAIN");
+                                printf("\n\n   -> PASSWORD DON'T MATCH <-\n   TRY AGAIN");
                             	printf("\n\n================================");
                                 printf("\n");
                                 sleep(1);                                
@@ -242,7 +251,7 @@ int menuLogin() {
                                     auxD = 0;
                                 } else{
                                     printf("\n========== REMOVE USER ==========");
-                                    printf("\n\n-> ERROR REMOVING USER <-\nTRY AGAIN");
+                                    printf("\n\n   -> ERROR - REMOVING USER <-\n   TRY AGAIN");
                                     printf("\n\n=================================");
                                     printf("\n");
                                     sleep(1);
@@ -266,7 +275,7 @@ int menuLogin() {
                 } else{
                     system("clear");
                     printf("\n========== REMOVE USER ==========");
-                    printf("\n\n-> ERRO 404! - USER NOT FOUND <-");
+                    printf("\n\n   -> ERROR! USER NOT FOUND <-");
                     printf("\n\n=================================");
                     printf("\n\nGO BACK TO START? (0 - NO | 1 - YES): ");
                     scanf("%d", &auxC);
@@ -320,7 +329,7 @@ int menu() {
     	       "\n| 3 - REMOVE EVENT             |"
                "\n|                              |"
     	       "\n|                              |"
-    	       "\n| 0 - EXIT                     |");
+    	       "\n| 0 - LOGOUT                   |");
         printf("\n================================\n\n");
         printf("ENTER YOUR CHOICE: ");
         scanf("%d", &auxA);
@@ -379,16 +388,16 @@ int insertEvent(List *LI){
         	
         	case 1:{
                 printf("\n========= INSERT TASK ==========");
-        		printf("\nSUBJECT: ");
+        		printf("\n\nSUBJECT: ");
         		setbuf(stdin, NULL);
                 fgets(AUX.subject, N, stdin);
-                printf("\nSTART TIME: ");
+                printf("START TIME: ");
                 scanf("%d", &AUX.startTime);
-                printf("\nEND TIME: ");
+                printf("END TIME: ");
                 scanf("%d", &AUX.endTime);
-                printf("\nEFFORT: ");
+                printf("EFFORT: ");
                 scanf("%d", &AUX.effort);
-                printf("\nPRIORITY: ");
+                printf("PRIORITY: ");
                 scanf("%d", &AUX.priority);
                 AUX.event = 1;
 
@@ -398,17 +407,17 @@ int insertEvent(List *LI){
 
             case 2:{ 
                 printf("\n======== INSERT MEETING ========");
-        		printf("\nSUBJECT: ");
+        		printf("\n\nSUBJECT: ");
         		setbuf(stdin, NULL);
                 fgets(AUX.subject, N, stdin);
-                printf("\nSTART TIME: ");
+                printf("START TIME: ");
                 scanf("%d", &AUX.startTime);
-                printf("\nEND TIME: ");
+                printf("END TIME: ");
                 scanf("%d", &AUX.endTime);
-                printf("\nLOCAL: ");
+                printf("LOCAL: ");
         		setbuf(stdin, NULL);
                 fgets(AUX.local, N, stdin);
-                printf("\nIS YOUR PRESENCE MANDATORY? (0 - NO | 1 - YES): ");
+                printf("IS YOUR PRESENCE MANDATORY? (0 - NO | 1 - YES): ");
                 scanf("%d", &AUX.presence);
                 AUX.event = 2;
 
@@ -418,17 +427,17 @@ int insertEvent(List *LI){
             
             case 3:{ 
                 printf("\n======= INSERT BIRTHDAY ========");
-        		printf("\nSUBJECT: ");
+        		printf("\n\nSUBJECT: ");
         		setbuf(stdin, NULL);
                 fgets(AUX.subject, N, stdin);
-                printf("\nSTART TIME: ");
+                printf("START TIME: ");
                 scanf("%d", &AUX.startTime);
-                printf("\nEND TIME: ");
+                printf("END TIME: ");
                 scanf("%d", &AUX.endTime);
-                printf("\nLOCAL: ");
+                printf("LOCAL: ");
         		setbuf(stdin, NULL);
                 fgets(AUX.local, N, stdin);
-                printf("\nBIRTHDAY NAME: ");
+                printf("BIRTHDAY NAME: ");
         		setbuf(stdin, NULL);
                 fgets(AUX.name, N, stdin);
                 AUX.event = 3;
@@ -443,7 +452,7 @@ int insertEvent(List *LI){
     }while(auxA!=0);
 }
 
-int viewEvent(List *LI){
+/*int viewEvent(List *LI){
     
     struct schedule AUX;  // "Variável" do tipo struct aluno
     
@@ -503,7 +512,7 @@ int viewEvent(List *LI){
 
         }
     }while(auxA!=0);   
-}
+}*/
 
 int removeEvent(List *LI){
     int auxA = 0, NUM = 0;
@@ -529,7 +538,6 @@ int removeEvent(List *LI){
                 printf("\nTIME: ");
                 scanf("%d", &NUM);
                 removeList(LI, NUM);                
-		        printf("\n================================");
                 printf("\n\nPRESS ENTER TO CONTINUE");
                 setbuf(stdin,NULL);
                 coordinates();
@@ -541,7 +549,6 @@ int removeEvent(List *LI){
                 printf("\nTIME: ");
                 scanf("%d", &NUM);
                 removeList(LI, NUM);                
-		        printf("\n================================");
                 printf("\n\nPRESS ENTER TO CONTINUE");
                 setbuf(stdin,NULL);
                 coordinates();
@@ -553,7 +560,6 @@ int removeEvent(List *LI){
                 printf("\nTIME: ");
                 scanf("%d", &NUM);
                 removeList(LI, NUM);
-		        printf("\n================================");
                 printf("\n\nPRESS ENTER TO CONTINUE");
                 setbuf(stdin,NULL);
                 coordinates();

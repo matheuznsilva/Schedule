@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include "ListaDinEncadDupla.h"
 #include "login.h"
 #include "funcoes.h"
@@ -41,7 +42,7 @@ int insertLogin(Login* LO, struct info al){		// Fun��o de inser��o ao fi
 	int I = 1;
 	Elem* NO;		// Declara��o de um ponteiro auxiliar
 	NO = (Elem*) malloc(sizeof(Elem));		// Aloca��o de memoria para o novo n� da lista
-	if(NO == NULL){		// Confere se o n� foi criado 
+	if(NO == NULL){		// Confere se o no foi criado 
 		return 0;		// Caso n�o tenha criado retorna 0
 	}
 	
@@ -136,8 +137,8 @@ void writeLogin(Login *LO){
 	FILE *fp = fopen("tamanho.txt", "w");
 	if(fp == NULL){
 		printf("\n================================");
-		printf(" -> ERRO NA LEITURA DE DADOS <-");
-		printf("\n================================");
+		printf("\n\n-> ERROR 404 - FILE NOT FOUND <-");
+		printf("\n\n================================");
 		exit(1);
 	}
 	fprintf(fp, "%d", COUNT);//(count, fp);	
@@ -147,8 +148,8 @@ void writeLogin(Login *LO){
     
     if(arq == NULL){
         printf("\n================================");
-		printf(" -> ERRO NA LEITURA DE DADOS <-");
-		printf("\n================================");
+		printf("\n\n-> ERROR 404 - FILE NOT FOUND <-");
+		printf("\n\n================================");
         exit(1);
     }
 

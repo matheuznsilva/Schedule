@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include "ListaDinEncadDupla.h"
 #include "login.h"
 #include "funcoes.h"
@@ -35,13 +36,11 @@ void freeList(List *LI){		// Fun��o que Apaga a lista
 int insertList(List* LI, struct schedule SC){		// Fun��o de inser��o ao final da lista 
 	if(LI == NULL){		// Confere se a lista existe 
 		return 0;		// Caso n�o exista retorna 0
-		printf("\n\t\t\tNAO INSERIDO\n\n");
     	sleep(1);
 	}
 	Comp* CO;		// Declara��o de um ponteiro auxiliar
 	CO = (Comp*) malloc(sizeof(Comp));		// Aloca��o de memoria para o novo n� da lista
 	if(CO == NULL){		// Confere se o n� foi criado 
-		printf("\n\t\t\tNAO INSERIDO\n\n");
     	sleep(1);
 		return 0;		// Caso n�o tenha criado retorna 0
 	}
@@ -52,7 +51,6 @@ int insertList(List* LI, struct schedule SC){		// Fun��o de inser��o ao 
 		CO->prox = NULL;		// Ponteiro prox � apontado para null
 		CO->ant = NULL;		// Se for o ponteiro ant vai receber null
 		*LI = CO;		// e li recebe o n� atual
-		printf("\n\t\t\tINSERIDO\n\n");
     	sleep(1);
 		return 1;
 	} else{		// Caso n�o seja a primeira posi��o do vetor executa as instu��es abaixo
@@ -75,7 +73,6 @@ int insertList(List* LI, struct schedule SC){		// Fun��o de inser��o ao 
 				atual->ant = CO;
 			}
 		}
-		printf("\n\t\t\tINSERIDO\n\n");
     	sleep(1);
 		return 1;
 	}
@@ -120,16 +117,20 @@ int removeList(List *LI, int num){
 		CO->prox->ant = CO->ant;
 	}
 	free(CO);
-    printf("\n\nEVENTO REMOVIDO COM SUCESSO");
+	system("clear");
+	printf("\n====================================");
+	printf("\n\n-> REMOVAL SUCCESSFULLY COMPLETED <-");
+	printf("\n\n====================================");
 	return 1;
 }
 
 void printEvent(List *LI){
     Comp *CO = *LI;
 	if(CO == NULL){
+		system("clear");
 		printf("\n================================");
-		printf("\n    -> NO EVENT REGISTERED <-   ");
-		printf("\n================================");
+		printf("\n\n-> ERRO! NO EVENT REGISTERED <-");
+		printf("\n\n================================");
 
 	} else{
 		while(CO!=NULL){        // La�o de repeti��o para percorrer a lista
