@@ -11,7 +11,7 @@ Login* loading(){
 
 	Login *LO;		// Declaração de ponteiro
 
-	FILE *fp = fopen("tamanho.txt", "r");
+	FILE *fp = fopen("size.bin", "rb");
 	if(fp == NULL){
 		printf("\n================================");
 		printf("\n\n-> ERROR 404 - FILE NOT FOUND <-");
@@ -66,7 +66,7 @@ int menuLogin() {
 	struct info dataAUX, dataAUX_1;	// "Variável" do tipo struct aluno
 	char EMAIL[N];
 	int PASSWORD, VERIFICATION;
-	int auxA = 0, auxB = 0, auxC = 0, auxD = 0;
+	int auxA = 0, auxB = 0, auxC = 0, auxD = 0, count;
 
 	do{
         system("clear");
@@ -110,7 +110,7 @@ int menuLogin() {
                         }
                     }while(auxD != 0);
 
-                    menu();
+                    menu(&dataAUX_1);
                 } else{
                     system("clear");
                     printf("\n============= LOGIN =============");
@@ -134,7 +134,6 @@ int menuLogin() {
             }
 
             case 2:{ // cadastrar novo usuário
-
         		do{
                     system("clear");
                     printf("\n====== REGISTER A NEW USER ======");
@@ -240,7 +239,7 @@ int menuLogin() {
                             printf("\nPASSWORD: ");
                             scanf("%d", &dataAUX.password);
                             if(dataAUX.password == dataAUX_1.password){
-                               auxC = removeLogin(LO, dataAUX_1.id);
+                                auxC = removeLogin(LO, dataAUX_1.id);
                                 if(auxC == 1){
                                     system("clear");
                                     printf("\n========== REMOVE USER ==========");
@@ -308,57 +307,6 @@ int menuLogin() {
 	
 	freeLogin(LO);		// Chamada de Função de destruição da Lista 
 		
-	return 0;
-}
-
-// ==========================================================
-
-int menu() {
-	
-	int auxA = 0;
-	
-	List *LI;		// Declaração do ponteiro do tipo Lista
-	
-	LI = creatList();		// Criacao da lista
-    
-    do{
-        system("clear");
-        printf("\n============= MENU =============");
-        printf("\n| 1 - INSERT EVENT             |"
-    	       "\n| 2 - VIEW EVENT               |"
-    	       "\n| 3 - REMOVE EVENT             |"
-               "\n|                              |"
-    	       "\n|                              |"
-    	       "\n| 0 - LOGOUT                   |");
-        printf("\n================================\n\n");
-        printf("ENTER YOUR CHOICE: ");
-        scanf("%d", &auxA);
-        system("clear");
-
-        switch(auxA){
-            case 1:{ 
-                insertEvent(LI);
-                break;
-            }
-            case 2:{
-                printEvent(LI);
-                printf("\nPRESS ENTER TO CONTINUE");
-                setbuf(stdin,NULL);
-                coordinates();
-                break;
-            }
-            case 3:{
-                removeEvent(LI);
-                break;
-            }
-            default:{
-                break;
-            }
-        } 
-    }while(auxA!=0);
-
-    freeList(LI);
-	
 	return 0;
 }
 
@@ -451,68 +399,6 @@ int insertEvent(List *LI){
         } 
     }while(auxA!=0);
 }
-
-/*int viewEvent(List *LI){
-    
-    struct schedule AUX;  // "Variável" do tipo struct aluno
-    
-    int auxA = 0, NUM = 0;
-
-    do{
-        system("clear");
-        printf("\n============= MENU =============");
-        printf("\n| 1 - FIND TASK                |"
-               "\n| 2 - FIND MEETING             |"
-               "\n| 3 - FIND BIRTHDAY            |"
-    	       "\n|                              |"
-               "\n|                              |"
-               "\n| 0 - GO BACK                  |");
-        printf("\n================================\n\n");
-        printf("ENTER YOUR CHOICE: ");
-        scanf("%d", &auxA);
-        system("clear");
-
-        switch(auxA){
-            
-            case 1:{
-                printf("TIME: ");
-                scanf("%d", &NUM);
-                findList(LI, NUM, &AUX);
-                //printEvent(1, AUX);
-                printf("\nPRESS ENTER TO CONTINUE");
-                setbuf(stdin,NULL);
-                coordinates();
-                break;
-            }
-
-            case 2:{ 
-                printf("TIME: ");
-                scanf("%d", &NUM);
-                findList(LI, NUM, &AUX);
-                //printEvent(2, AUX);
-                printf("\nPRESS ENTER TO CONTINUE");
-                setbuf(stdin,NULL);
-                coordinates();
-                break;
-            }
-            
-            case 3:{ 
-                printf("TIME: ");
-                scanf("%d", &NUM);
-                findList(LI, NUM, &AUX);
-                //printEvent(3, AUX);
-                printf("\nPRESS ENTER TO CONTINUE");
-                setbuf(stdin,NULL);
-                coordinates();
-                break;
-            }
-            default:{
-                break;
-            }
-
-        }
-    }while(auxA!=0);   
-}*/
 
 int removeEvent(List *LI){
     int auxA = 0, NUM = 0;

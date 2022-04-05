@@ -33,6 +33,19 @@ void freeList(List *LI){		// Fun��o que Apaga a lista
 	}
 }
 
+int sizeList(List* LI){	
+	if(LI == NULL){		// confere se a lista existe
+		return 0;		// caso não exista retorna -1 informando o erro
+	}
+	int cont = 0;		// declaração de variável local(contador) para armazenar a quantidade de elementos presentes na lista
+	Comp* CO = *LI;		// declaração e atribuição do ponteiro auxiliar para percorrer a lista
+	while(CO != NULL){		// loop para percorrer a lista com condição de para ser o final da lista
+		cont++;		// incremento do contador
+		CO = CO->prox;		// ponteiro auxiliar recebe a proxima posição da lista
+	}
+	return cont;		// retorna o contador
+}
+
 int insertList(List* LI, struct schedule SC){		// Fun��o de inser��o ao final da lista 
 	if(LI == NULL){		// Confere se a lista existe 
 		return 0;		// Caso n�o exista retorna 0
@@ -174,4 +187,82 @@ void printEvent(List *LI){
 		
 		printf("\n================================");
 	}
+}
+
+void writeSchedule(List* LI, char email[]){
+
+	int COUNT = sizeList(LI);
+
+    Comp *CO = *LI;
+
+	struct schedule DATA[COUNT];
+
+	FILE *fp = fopen("sizeList.bin", "w+b");
+	if(fp == NULL){
+		printf("\n================================");
+		printf("\n\n-> ERROR 404 - FILE NOT FOUND <-");
+		printf("\n\n================================");
+		exit(1);
+	}
+	fprintf(fp, "%d", COUNT);//(count, fp);	
+	fclose(fp);
+
+	strcat(email, "_DATA.bin");
+	FILE *arq = fopen(email, "w+b");
+	if(arq == NULL){
+        printf("\n================================");
+		printf("\n\n-> ERROR 404 - FILE NOT FOUND <-");
+		printf("\n\n================================");
+        exit(1);
+    }
+
+	for(int I=0; I<COUNT; I++){
+    	strcpy(DATA[I].subject , CO->DATA.subject);
+    	strcpy(DATA[I].local , CO->DATA.local);
+    	strcpy(DATA[I].name , CO->DATA.name);
+    	DATA[I].startTime = CO->DATA.startTime;
+    	DATA[I].endTime = CO->DATA.endTime;
+    	DATA[I].effort = CO->DATA.effort;
+    	DATA[I].priority = CO->DATA.priority;
+    	DATA[I].presence = CO->DATA.presence;
+    	DATA[I].event = CO->DATA.event;
+    	CO = CO->prox;
+    }
+
+	fwrite(DATA, sizeof(struct schedule), COUNT, arq);	
+}
+
+void learnSchedule(List* LI, char email[]){
+	int I, COUNT;
+
+	FILE *fp = fopen("sizeList.bin", "rb");
+	if(fp == NULL){
+		printf("\n================================");
+		printf("\n\n-> ERROR 404 - FILE NOT FOUND <-");
+		printf("\n\n================================");
+		exit(1);
+	}
+	fscanf(fp, "%d", &COUNT);	
+	fclose(fp);
+
+	struct schedule DADOS[COUNT];	// "Variável" do tipo struct aluno
+	
+	strcat(email, "_DATA.bin");
+	FILE *ARQ = fopen(email, "rb");
+	if(ARQ == NULL){
+		printf("\n================================");
+		printf("\n\n-> ERROR 404 - FILE NOT FOUND <-");
+		printf("\n\n================================");
+		exit(1);
+	}
+
+	fread(DADOS, sizeof(struct info), COUNT, ARQ);
+
+	for(I = 0; I < COUNT; I++){
+		insertList(LI, DADOS[I]);
+	}
+
+	fclose(ARQ);
+
+	//return LI;
 }

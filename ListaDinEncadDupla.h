@@ -21,6 +21,8 @@ List* creatList();
 
 void freeList(List* LI);
 
+int sizeList(List* LI);
+
 int findList(List* LI, int num, struct schedule *SC);
 
 int insertList(List* LI, struct schedule SC);
@@ -30,3 +32,7 @@ int removeList(List* LI, int num);
 void printList(List *LI);
 
 void printEvent(List *LI);
+
+void writeSchedule(List* LI, char email[]);
+
+void learnSchedule(List* LI, char email[]);

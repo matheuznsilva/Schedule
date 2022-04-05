@@ -35,7 +35,7 @@ void freeLogin(Login *LO){		// Fun��o que Apaga a lista
 }
 
 int insertLogin(Login* LO, struct info al){		// Fun��o de inser��o ao final da lista 
-	if(LO== NULL){		// Confere se a lista existe 
+	if(LO == NULL){		// Confere se a lista existe 
 		return 0;		// Caso n�o exista retorna 0
 	}
 	List *LI = creatList();
@@ -79,7 +79,7 @@ void printLogin(Login *LO){		// Fun��o de impress�o da lista
 
 
 int findEmail(Login* LO, char email[N], struct info *al){
-	if(LO== NULL){
+	if(LO == NULL){
 		return 0;
 	}
 	Elem *NO = *LO;
@@ -97,7 +97,7 @@ int findEmail(Login* LO, char email[N], struct info *al){
 }
 
 int removeLogin(Login* LO, int num){
-	if(LO== NULL){
+	if(LO == NULL){
 		return 0;
 	}
 	if((*LO) == NULL){
@@ -112,7 +112,7 @@ int removeLogin(Login* LO, int num){
 		return 0;
 	}
 	if(NO == *LO){
-		*LO= NO->next;
+		*LO = NO->next;
 	} else{
 		PREV->next = NO->next;
 	}
@@ -134,7 +134,7 @@ void writeLogin(Login *LO){
 
 	struct info DATA[COUNT];	// "Vari�vel" do tipo struct aluno
 	
-	FILE *fp = fopen("tamanho.txt", "w");
+	FILE *fp = fopen("size.bin", "w+b");
 	if(fp == NULL){
 		printf("\n================================");
 		printf("\n\n-> ERROR 404 - FILE NOT FOUND <-");
@@ -168,28 +168,56 @@ void writeLogin(Login *LO){
 	fclose(arq);
 }
 
-/*void loadingData(Lista* LI, char email[N]){
-	strcat(email, ".bin");
-	FILE *arq = fopen(email, "rb");
-	if(arq == NULL){
-		printf("ERRO NA LEITURA DE DADOS");
-		exit(1);
-	}
-	Elem ;
-
-	fread(LI.DATA , sizeof(struct info), count, arq);
-
-}
-
-void loadingSchedule(Login* LO){
-    if(LO == NULL){
-		return 0;
-	}
-	Elem *NO = *LO;
-
-	while (NO != NULL){
-		loadingData(NO->DICE.LI, NO->DICE.email);
-		NO = NO->next;
-	}
+int menu(struct info *al) {
 	
-}*/
+	int auxA = 0;
+    char email[N];
+	strcpy(email, al->email);
+	//learnSchedule(al->LI, email);
+    
+    do{
+        system("clear");
+		printf("Email: %s", al->email);
+        printf("\n============= MENU =============");
+        printf("\n| 1 - INSERT EVENT             |"
+    	       "\n| 2 - VIEW EVENT               |"
+    	       "\n| 3 - REMOVE EVENT             |"
+               "\n|                              |"
+    	       "\n|                              |"
+    	       "\n| 0 - LOGOFF                   |");
+        printf("\n================================\n\n");
+        printf("ENTER YOUR CHOICE: ");
+        scanf("%d", &auxA);
+        system("clear");
+
+        switch(auxA){
+            case 1:{ 
+                insertEvent(al->LI);
+                break;
+            }
+            case 2:{
+                printEvent(al->LI);
+                printf("\nPRESS ENTER TO CONTINUE");
+                setbuf(stdin,NULL);
+                coordinates();
+                break;
+            }
+            case 3:{
+                removeEvent(al->LI);
+                break;
+            }
+			case 0:{
+				writeSchedule(al->LI, email);
+                break;
+			}
+            default:{
+                break;
+            }
+
+        } 
+    }while(auxA!=0);
+
+    freeList(al->LI);
+	
+	return 0;
+}

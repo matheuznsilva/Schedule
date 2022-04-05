@@ -27,7 +27,4 @@ void printLogin(Login *LO);
 
 void writeLogin(Login *LO);
 
-//void loadingData(Lista* LI, char email[]);
-
-//void loadingSchedule(Login* LO);
-
+int menu(struct info *al);
