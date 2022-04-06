@@ -177,7 +177,7 @@ int menu(struct info *al) {
     
     do{
         system("clear");
-		printf("Email: %s", al->email);
+		printf("Email: %s", &email);
         printf("\n============= MENU =============");
         printf("\n| 1 - INSERT EVENT             |"
     	       "\n| 2 - VIEW EVENT               |"

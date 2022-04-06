@@ -197,7 +197,7 @@ void writeSchedule(List* LI, char email[]){
 
 	struct schedule DATA[COUNT];
 
-	FILE *fp = fopen("sizeList.bin", "w+b");
+	FILE *fp = fopen("sizeList.bin", "wb");
 	if(fp == NULL){
 		printf("\n================================");
 		printf("\n\n-> ERROR 404 - FILE NOT FOUND <-");
@@ -208,7 +208,7 @@ void writeSchedule(List* LI, char email[]){
 	fclose(fp);
 
 	strcat(email, "_DATA.bin");
-	FILE *arq = fopen(email, "w+b");
+	FILE *arq = fopen(email, "wb");
 	if(arq == NULL){
         printf("\n================================");
 		printf("\n\n-> ERROR 404 - FILE NOT FOUND <-");
@@ -228,7 +228,6 @@ void writeSchedule(List* LI, char email[]){
     	DATA[I].event = CO->DATA.event;
     	CO = CO->prox;
     }
-
 	fwrite(DATA, sizeof(struct schedule), COUNT, arq);	
 }
 
@@ -237,32 +236,26 @@ void learnSchedule(List* LI, char email[]){
 
 	FILE *fp = fopen("sizeList.bin", "rb");
 	if(fp == NULL){
-		printf("\n================================");
-		printf("\n\n-> ERROR 404 - FILE NOT FOUND <-");
-		printf("\n\n================================");
-		exit(1);
+		fclose(fp);
+	} else{
+		fscanf(fp, "%d", &COUNT);	
+		
+		struct schedule DADOS[COUNT];	// "Variável" do tipo struct aluno
+		
+		strcat(email, "_DATA.bin");
+		FILE *ARQ = fopen(email, "rb");
+		if(ARQ == NULL){
+			printf("\n================================");
+			printf("\n\n-> ERROR 404 - FILE NOT FOUND <-");
+			printf("\n\n================================");
+			exit(1);
+		}
+
+		fread(DADOS, sizeof(struct info), COUNT, ARQ);
+
+		for(I = 0; I < COUNT; I++){
+			insertList(LI, DADOS[I]);
+		}
+		fclose(ARQ);
 	}
-	fscanf(fp, "%d", &COUNT);	
-	fclose(fp);
-
-	struct schedule DADOS[COUNT];	// "Variável" do tipo struct aluno
-	
-	strcat(email, "_DATA.bin");
-	FILE *ARQ = fopen(email, "rb");
-	if(ARQ == NULL){
-		printf("\n================================");
-		printf("\n\n-> ERROR 404 - FILE NOT FOUND <-");
-		printf("\n\n================================");
-		exit(1);
-	}
-
-	fread(DADOS, sizeof(struct info), COUNT, ARQ);
-
-	for(I = 0; I < COUNT; I++){
-		insertList(LI, DADOS[I]);
-	}
-
-	fclose(ARQ);
-
-	//return LI;
 }
