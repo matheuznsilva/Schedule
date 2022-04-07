@@ -17,7 +17,7 @@ typedef struct component* List;
 List* creatList();
 
 
-// Declaracao dos prototipos das funcoes
+// Declaração dos prototipos das funções
 
 void freeList(List* LI);
 
@@ -35,4 +35,4 @@ void printEvent(List *LI);
 
 void writeSchedule(List* LI, char email[]);
 
-void learnSchedule(List* LI, char email[]);
+void readSchedule(List* LI, char email[]);

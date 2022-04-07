@@ -61,9 +61,8 @@ int menuLogin() {
 	Login *LO;
 
 	LO = loading();
-    //loadingSchedule(LO);
 
-	struct info dataAUX, dataAUX_1;	// "Variável" do tipo struct aluno
+	struct info dataAUX, dataAUX_1;	
 	char EMAIL[N];
 	int PASSWORD, VERIFICATION;
 	int auxA = 0, auxB = 0, auxC = 0, auxD = 0, count;
@@ -343,10 +342,13 @@ int insertEvent(List *LI){
                 scanf("%d", &AUX.startTime);
                 printf("END TIME: ");
                 scanf("%d", &AUX.endTime);
+                strcpy(AUX.local, "\0");
+                strcpy(AUX.name, "\0");
                 printf("EFFORT: ");
                 scanf("%d", &AUX.effort);
                 printf("PRIORITY: ");
                 scanf("%d", &AUX.priority);
+                AUX.presence = NULL;
                 AUX.event = 1;
 
                 insertList(LI, AUX);
@@ -365,6 +367,9 @@ int insertEvent(List *LI){
                 printf("LOCAL: ");
         		setbuf(stdin, NULL);
                 fgets(AUX.local, N, stdin);
+                strcpy(AUX.name, "\0");
+                AUX.effort = NULL;
+                AUX.priority = NULL;
                 printf("IS YOUR PRESENCE MANDATORY? (0 - NO | 1 - YES): ");
                 scanf("%d", &AUX.presence);
                 AUX.event = 2;
@@ -388,8 +393,11 @@ int insertEvent(List *LI){
                 printf("BIRTHDAY NAME: ");
         		setbuf(stdin, NULL);
                 fgets(AUX.name, N, stdin);
+                AUX.effort = NULL;
+                AUX.priority = NULL;
+                AUX.presence = NULL;
                 AUX.event = 3;
-                
+
                 insertList(LI, AUX);
                 break;
             }

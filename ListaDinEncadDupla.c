@@ -7,25 +7,25 @@
 #include "funcoes.h"
 
 struct component{		// Struct que define cada elemento da lista
-	struct component *ant;		// Ponteiro que recebe a posi��o do n� anterior
+	struct component *ant;	
 	struct schedule DATA;		// Struct dados do tipo aluno
-	struct component *prox;		// Ponteiro que recebe a posi��o do n� posterior
+	struct component *prox;	
 };
-typedef struct component Comp;		// Defini��o do tipo elemento
+typedef struct component Comp;
 
-List* creatList(){		// Fun��o de cria��o da lista
-	List* LI = (List*) malloc(sizeof(List));		// Aloca��o de memoria para o inicio da lista 
-	if(LI != NULL){		// Verifica��o se a lista foi criada
+List* creatList(){
+	List* LI = (List*) malloc(sizeof(List)); 
+	if(LI != NULL){		
 		*LI = NULL;		// Caso tenha sido criada aponta para null
 	}
 	return LI;		// retorna lista
 }
 
-void freeList(List *LI){		// Fun��o que Apaga a lista
-	if(LI != NULL){		// Confere se a lista existe
-		Comp* CO;		// Declara��o de um ponteiro auxiliar
-		while((*LI) != NULL){		// La�o de repeti��o para percorrer a lista
-			CO = *LI;		// Ponteiro auxiliar recebe a posi��o atual da lista
+void freeList(List *LI){
+	if(LI != NULL){
+		Comp* CO;
+		while((*LI) != NULL){
+			CO = *LI;
 			*LI = (*LI)->prox;		// Ponteiro principal passa a apontar para o proximo elemento
 			free(CO);		// Libera o ponteiro auxiliar
 		}
@@ -46,31 +46,31 @@ int sizeList(List* LI){
 	return cont;		// retorna o contador
 }
 
-int insertList(List* LI, struct schedule SC){		// Fun��o de inser��o ao final da lista 
-	if(LI == NULL){		// Confere se a lista existe 
-		return 0;		// Caso n�o exista retorna 0
+int insertList(List* LI, struct schedule SC){ 
+	if(LI == NULL){ 
+		return 0;
     	sleep(1);
 	}
-	Comp* CO;		// Declara��o de um ponteiro auxiliar
-	CO = (Comp*) malloc(sizeof(Comp));		// Aloca��o de memoria para o novo n� da lista
-	if(CO == NULL){		// Confere se o n� foi criado 
+	Comp* CO;
+	CO = (Comp*) malloc(sizeof(Comp));
+	if(CO == NULL){	 
     	sleep(1);
-		return 0;		// Caso n�o tenha criado retorna 0
+		return 0;	
 	}
 	
-	CO->DATA = SC;		// Preenchimento da lista com o dado fornecido 
+	CO->DATA = SC;	 
 	
-	if((*LI) == NULL){		// Confere se � a primeira posi��o da lista
-		CO->prox = NULL;		// Ponteiro prox � apontado para null
-		CO->ant = NULL;		// Se for o ponteiro ant vai receber null
-		*LI = CO;		// e li recebe o n� atual
+	if((*LI) == NULL){
+		CO->prox = NULL;		
+		CO->ant = NULL;
+		*LI = CO;	
     	sleep(1);
 		return 1;
-	} else{		// Caso n�o seja a primeira posi��o do vetor executa as instu��es abaixo
-		Comp *ante, *atual = *LI;		// Cria��o de um segundo ponteiro auxiliar para percorrer a lista
-		while(atual != NULL && atual->DATA.startTime < SC.startTime){		// La�o de repeti��o para percorrer a lista
+	} else{	
+		Comp *ante, *atual = *LI;	
+		while(atual != NULL && atual->DATA.startTime < SC.startTime){
 			ante = atual;
-			atual = atual->prox;		// Segundo ponteiro auxiliar recebe a proxima posi��o da lista
+			atual = atual->prox;
 		}
 
 		if(atual == *LI){
@@ -115,7 +115,7 @@ int removeList(List *LI, int num){
 		return 0;
 	}
 	Comp *CO = *LI;
-	while(CO != NULL && CO->DATA.startTime != num){		// La�o de repeti��o para percorrer a lista
+	while(CO != NULL && CO->DATA.startTime != num){	
 		CO = CO->prox;	
 	}
 	if(CO == NULL){
@@ -146,7 +146,7 @@ void printEvent(List *LI){
 		printf("\n\n================================");
 
 	} else{
-		while(CO!=NULL){        // La�o de repeti��o para percorrer a lista
+		while(CO!=NULL){
 			if(CO->DATA.event == 1){
 				printf("\n============= TASK =============");
 				printf("\nSUBJECT: %s", CO->DATA.subject);
@@ -182,22 +182,26 @@ void printEvent(List *LI){
 				printf("\n================================");
 			}
 			printf("\n");
-			CO = CO->prox;      // Ponteiro auxiliar recebendo a posi��o do proximo n� 
+			CO = CO->prox;
 		}
 		
 		printf("\n================================");
 	}
 }
-
+/*
 void writeSchedule(List* LI, char email[]){
 
 	int COUNT = sizeList(LI);
+
+	char size_List[N] = "sizeList_";
+	strcat(size_List, email);
+	strcat(size_List, ".bin");
 
     Comp *CO = *LI;
 
 	struct schedule DATA[COUNT];
 
-	FILE *fp = fopen("sizeList.bin", "wb");
+	FILE *fp = fopen(size_List, "wb");
 	if(fp == NULL){
 		printf("\n================================");
 		printf("\n\n-> ERROR 404 - FILE NOT FOUND <-");
@@ -214,33 +218,40 @@ void writeSchedule(List* LI, char email[]){
 		printf("\n\n-> ERROR 404 - FILE NOT FOUND <-");
 		printf("\n\n================================");
         exit(1);
-    }
+    } else{
 
-	for(int I=0; I<COUNT; I++){
-    	strcpy(DATA[I].subject , CO->DATA.subject);
-    	strcpy(DATA[I].local , CO->DATA.local);
-    	strcpy(DATA[I].name , CO->DATA.name);
-    	DATA[I].startTime = CO->DATA.startTime;
-    	DATA[I].endTime = CO->DATA.endTime;
-    	DATA[I].effort = CO->DATA.effort;
-    	DATA[I].priority = CO->DATA.priority;
-    	DATA[I].presence = CO->DATA.presence;
-    	DATA[I].event = CO->DATA.event;
-    	CO = CO->prox;
-    }
-	fwrite(DATA, sizeof(struct schedule), COUNT, arq);	
+		for(int I=0; I<COUNT; I++){
+			strcpy(DATA[I].subject , CO->DATA.subject);
+			strcpy(DATA[I].local , CO->DATA.local);
+			strcpy(DATA[I].name , CO->DATA.name);
+			DATA[I].startTime = CO->DATA.startTime;
+			DATA[I].endTime = CO->DATA.endTime;
+			DATA[I].effort = CO->DATA.effort;
+			DATA[I].priority = CO->DATA.priority;
+			DATA[I].presence = CO->DATA.presence;
+			DATA[I].event = CO->DATA.event;
+			CO = CO->prox;
+		}
+		fwrite(DATA, sizeof(struct schedule), COUNT, arq);	
+	}
+	fclose(arq);
 }
-
-void learnSchedule(List* LI, char email[]){
+*/
+void readSchedule(List* LI, char email[]){
 	int I, COUNT;
 
-	FILE *fp = fopen("sizeList.bin", "rb");
+	char sizeList[N] = "sizeList_";
+	strcpy(sizeList, email);
+	strcpy(sizeList, ".bin");
+	
+
+	FILE *fp = fopen(sizeList, "rb");
 	if(fp == NULL){
 		fclose(fp);
 	} else{
 		fscanf(fp, "%d", &COUNT);	
 		
-		struct schedule DADOS[COUNT];	// "Variável" do tipo struct aluno
+		struct schedule DADOS[COUNT];
 		
 		strcat(email, "_DATA.bin");
 		FILE *ARQ = fopen(email, "rb");
@@ -258,4 +269,53 @@ void learnSchedule(List* LI, char email[]){
 		}
 		fclose(ARQ);
 	}
+}
+
+void writeSchedule(List* LI, char email[]){
+
+	int COUNT = sizeList(LI);
+
+	char size_List[N] = "sizeList_";
+	strcat(size_List, email);
+	strcat(size_List, ".bin");
+
+    Comp *CO = *LI;
+
+	struct schedule DATA[COUNT];
+
+	FILE *fp = fopen(size_List, "wb");
+	if(fp == NULL){
+		printf("\n================================");
+		printf("\n\n-> ERROR 404 - FILE NOT FOUND <-");
+		printf("\n\n================================");
+		exit(1);
+	}
+	fprintf(fp, "%d", COUNT);//(count, fp);	
+	fclose(fp);
+
+	strcat(email, "_DATA.txt");
+	FILE *arq = fopen(email, "w");
+	if(arq == NULL){
+        printf("\n================================");
+		printf("\n\n-> ERROR 404 - FILE NOT FOUND <-");
+		printf("\n\n================================");
+        exit(1);
+    } else{
+
+		for(int I=0; I<COUNT; I++){
+			fprintf(arq, "|%s |", CO->DATA.subject);
+			fprintf(arq, "%s |", CO->DATA.local);
+			fprintf(arq, "%s |", CO->DATA.name);
+			fprintf(arq, "%d |", CO->DATA.startTime);
+			fprintf(arq, "%d |", CO->DATA.endTime);
+			fprintf(arq, "%d |", CO->DATA.effort);
+			fprintf(arq, "%d |", CO->DATA.priority);
+			fprintf(arq, "%d |", CO->DATA.presence);
+			fprintf(arq, "%d |\n", CO->DATA.event);
+			
+			CO = CO->prox;
+		}
+		//fwrite(DATA, sizeof(struct schedule), COUNT, arq);	
+	}
+	fclose(arq);
 }

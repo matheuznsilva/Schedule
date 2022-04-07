@@ -13,7 +13,7 @@ typedef struct element* Login;
 
 Login* creatLogin();
 
-// Declaracao dos prototipos das funcoes
+// Declaração dos prototipos das funções
 
 void freeLogin(Login* LO);
 

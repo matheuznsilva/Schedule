@@ -7,9 +7,9 @@
 #include "funcoes.h"
 
 struct element{		// Struct que define cada elemento da lista
-	struct element *prev;		// Ponteiro que recebe a posi��o do n� anterior
+	struct element *prev;
 	struct info DICE;		// Struct dados do tipo info
-	struct element *next;		// Ponteiro que recebe a posi��o do n� posterior
+	struct element *next;
 };
 typedef struct element Elem;		// Defini��o do tipo elemento
 
@@ -25,7 +25,7 @@ void freeLogin(Login *LO){		// Fun��o que Apaga a lista
 	if(LO!= NULL){		// Confere se a lista existe
 		Elem* NO;		// Declara��o de um ponteiro auxiliar
 		while((*LO) != NULL){		// La�o de repeti��o para percorrer a lista
-			NO = *LO;		// Ponteiro auxiliar recebe a posi��o atual da lista
+			NO = *LO;
 			*LO = (*LO)->next;		// Ponteiro principal passa a apontar para o proximo elemento
 			free(NO);		// Libera o ponteiro auxiliar
 		}
@@ -34,7 +34,7 @@ void freeLogin(Login *LO){		// Fun��o que Apaga a lista
 	}
 }
 
-int insertLogin(Login* LO, struct info al){		// Fun��o de inser��o ao final da lista 
+int insertLogin(Login* LO, struct info al){		 
 	if(LO == NULL){		// Confere se a lista existe 
 		return 0;		// Caso n�o exista retorna 0
 	}
@@ -48,16 +48,16 @@ int insertLogin(Login* LO, struct info al){		// Fun��o de inser��o ao fi
 	
 	NO->DICE = al;		// Preenchimento do no com o dado fornecido
 	NO->DICE.LI = LI;
-	NO->next = NULL;		// Ponteiro prox � apontado para null
-	if((*LO) == NULL){		// Confere se � a primeira posi��o da lista
+	NO->next = NULL;		// Ponteiro prox eh apontado para null
+	if((*LO) == NULL){
 		NO->DICE.id = I;
 		NO->prev = NULL;		// Se for o ponteiro ant vai receber null
 		*LO = NO;		// e li recebe o n� atual
-	} else{		// Caso n�o seja a primeira posi��o do vetor executa as instu��es abaixo
+	} else{		
 		Elem *AUX = *LO;		// Cria��o de um segundo ponteiro auxiliar para percorrer a lista
 		while(AUX->next != NULL){		// La�o de repeti��o para percorrer a lista
 			I = AUX->DICE.id+1;
-			AUX = AUX->next;		// Segundo ponteiro auxiliar recebe a proxima posi��o da lista
+			AUX = AUX->next;
 		}
 		NO->DICE.id = I+1;
 		AUX->next = NO;			// Ponteiro prox do segundo ponteiro aponta para o primeiro n� auxiliar 
@@ -66,13 +66,13 @@ int insertLogin(Login* LO, struct info al){		// Fun��o de inser��o ao fi
 	return 1;		// Caso tudo funcione retorna 1
 }
 
-void printLogin(Login *LO){		// Fun��o de impress�o da lista
-	Elem *NO = *LO;		// Declara�a� de um ponteiro auxiliar
+void printLogin(Login *LO){
+	Elem *NO = *LO;		
     printf("\n======= REGISTERED USERS =======");
-	while(NO!=NULL){		// La�o de repeti��o para percorrer a lista
+	while(NO!=NULL){	
 		printf("\nID: %d \nNAME: %s %s \nEMAIL: %s" /*\nPASSWORD: %d\n"*/, NO->DICE.id, NO->DICE.Name, NO->DICE.LastName, NO->DICE.email/*, NO->DICE.password*/);
 		printf("\n================================");
-		NO = NO->next;		// Ponteiro auxiliar recebendo a posi��o do proximo n� 
+		NO = NO->next; 
 	}
 	printf("\n");		// Quebra de linha
 }
@@ -132,7 +132,7 @@ void writeLogin(Login *LO){
     	COUNT++;
     }
 
-	struct info DATA[COUNT];	// "Vari�vel" do tipo struct aluno
+	struct info DATA[COUNT];	
 	
 	FILE *fp = fopen("size.bin", "w+b");
 	if(fp == NULL){
@@ -173,11 +173,10 @@ int menu(struct info *al) {
 	int auxA = 0;
     char email[N];
 	strcpy(email, al->email);
-	//learnSchedule(al->LI, email);
+	//readSchedule(al->LI, email);
     
     do{
         system("clear");
-		printf("Email: %s", &email);
         printf("\n============= MENU =============");
         printf("\n| 1 - INSERT EVENT             |"
     	       "\n| 2 - VIEW EVENT               |"
@@ -216,8 +215,6 @@ int menu(struct info *al) {
 
         } 
     }while(auxA!=0);
-
-    freeList(al->LI);
 	
 	return 0;
 }
