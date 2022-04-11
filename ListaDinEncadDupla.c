@@ -188,7 +188,7 @@ void printEvent(List *LI){
 		printf("\n================================");
 	}
 }
-/*
+
 void writeSchedule(List* LI, char email[]){
 
 	int COUNT = sizeList(LI);
@@ -236,7 +236,7 @@ void writeSchedule(List* LI, char email[]){
 	}
 	fclose(arq);
 }
-*/
+
 void readSchedule(List* LI, char email[]){
 	int I, COUNT;
 
@@ -270,7 +270,7 @@ void readSchedule(List* LI, char email[]){
 		fclose(ARQ);
 	}
 }
-
+/*
 void writeSchedule(List* LI, char email[]){
 
 	int COUNT = sizeList(LI);
@@ -318,4 +318,4 @@ void writeSchedule(List* LI, char email[]){
 		//fwrite(DATA, sizeof(struct schedule), COUNT, arq);	
 	}
 	fclose(arq);
-}
+}*/
